@@ -13,6 +13,7 @@
     "@koishijs/plugin-onebot": "^4.0.0-alpha.8",
     "@koishijs/plugin-status": "^5.0.0-alpha.7",
     "@koishijs/plugin-telegram": "^2.0.0-alpha.6",
+    "dotenv": "^10.0.0",
     "koishi": "^4.0.0-alpha.9"
   },
   "devDependencies": {
