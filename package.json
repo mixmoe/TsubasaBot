@@ -1,17 +1,25 @@
 {
-  "name": "template",
-  "version": "1.0.0",
-  "private": true,
+  "name": "tsubasa-bot",
+  "version": "0.0.1",
+  "private": false,
+  "repository": "https://github.com/mixmoe/TsubasaBot",
   "scripts": {
-    "start": "koishi start"
+    "start": "ts-node ./app.ts"
   },
   "dependencies": {
     "@koishijs/cli": "^4.0.0-alpha.5",
     "@koishijs/plugin-common": "^5.0.0-alpha.9",
     "@koishijs/plugin-discord": "^2.0.0-alpha.6",
     "@koishijs/plugin-onebot": "^4.0.0-alpha.8",
-    "@koishijs/plugin-telegram": "^2.0.0-alpha.6",
     "@koishijs/plugin-status": "^5.0.0-alpha.7",
+    "@koishijs/plugin-telegram": "^2.0.0-alpha.6",
     "koishi": "^4.0.0-alpha.9"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.2.101",
+    "@swc/helpers": "^0.2.13",
+    "regenerator-runtime": "^0.13.9",
+    "ts-node": "^10.3.0",
+    "typescript": "^4.4.4"
   }
 }
