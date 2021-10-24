@@ -7,20 +7,23 @@
     "start": "ts-node ./app.ts"
   },
   "dependencies": {
-    "@koishijs/cli": "^4.0.0-alpha.5",
+    "@koishijs/cli": "^4.0.0-alpha.6",
     "@koishijs/plugin-adapter-onebot": "^4.0.0-alpha.9",
-    "@koishijs/plugin-chat": "^1.0.0-alpha.8",
+    "@koishijs/plugin-chat": "^1.0.0-alpha.9",
     "@koishijs/plugin-common": "^5.0.0-alpha.10",
     "@koishijs/plugin-database-sqlite": "^1.0.0-alpha.2",
-    "@koishijs/plugin-gocqhttp": "^1.0.0-alpha.2",
+    "@koishijs/plugin-gocqhttp": "^1.0.0-alpha.3",
+    "axios": "^0.23.0",
+    "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
-    "koishi": "^4.0.0-alpha.9"
+    "koishi": "^4.0.0-alpha.10"
   },
   "devDependencies": {
-    "@swc/core": "^1.2.101",
+    "@swc/core": "^1.2.102",
     "@swc/helpers": "^0.2.13",
+    "@types/node": "^16.11.4",
     "regenerator-runtime": "^0.13.9",
-    "ts-node": "^10.3.0",
+    "ts-node": "^10.4.0",
     "typescript": "^4.4.4"
   }
 }
