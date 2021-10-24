@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 import * as onebot from "@koishijs/plugin-adapter-onebot";
 import * as common from "@koishijs/plugin-common";
 import * as chat from "@koishijs/plugin-chat";
-import * as helloWorld from "./src/hello-world";
+import * as hibi from "./src/plugin-hibi";
 
 dotenv.config();
 
@@ -16,6 +16,6 @@ app.plugin(onebot, {
 });
 app.plugin(common);
 app.plugin(chat);
-app.plugin(helloWorld);
+app.plugin(hibi);
 
 app.start();
