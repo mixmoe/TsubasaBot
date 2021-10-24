@@ -5,6 +5,8 @@ import * as pixiv from "./network";
 import { PixivRankType } from "./models";
 import * as dayjs from "dayjs";
 
+const boundedLimit = BoundedNumber({ le: 3, ge: 1 });
+
 function ranking(command: Command) {
   command
     .subcommand("pixiv.ranking")
@@ -17,7 +19,7 @@ function ranking(command: Command) {
       fallback: null,
     })
     .option("limit", "-l <size:number> 最多发送图片数量", {
-      type: BoundedNumber({ le: 3, ge: 1 }),
+      type: boundedLimit,
       fallback: 3,
     })
     .action(async ({ options, session }) => {
@@ -61,7 +63,48 @@ function ranking(command: Command) {
     });
 }
 
+function illust(command: Command) {
+  command
+    .subcommand("pixiv.illust <id:posint>")
+    .alias("点图", "p站点图", "pixiv点图")
+    .option("limit", "-l <size:number> 最多发送图片数量", {
+      type: boundedLimit,
+      fallback: 3,
+    })
+    .action(async ({ options, session }, id) => {
+      const response = await pixiv.illust(id);
+      const illust = response.illust;
+
+      await session?.send(
+        segment("share", {
+          title: illust.title,
+          content: illust.user.name,
+          url: `https://pixiv.obfs.dev/#/artwork/${illust.id}`,
+          image: proxyPixivImage(illust.image_urls.square_medium),
+        })
+      );
+
+      const images = (
+        !illust.meta_single_page.original_image_url
+          ? illust.meta_pages.map((page) => page.image_urls.original)
+          : [illust.meta_single_page.original_image_url]
+      )
+        .map(proxyPixivImage)
+        .slice(0, options?.limit);
+
+      for (let index = 0; index < images.length; index++) {
+        await session?.send(
+          segment("cardimage", {
+            file: images[index],
+            source: `第${index + 1}张`,
+          })
+        );
+      }
+    });
+}
+
 export function apply(ctx: Context) {
-  const command = ctx.command("hibi/pixiv");
+  const command = ctx.command("hibi");
   ranking(command);
+  illust(command);
 }
