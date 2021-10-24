@@ -43,6 +43,15 @@ export interface PixivIllust {
   total_bookmarks: number;
 }
 
+export interface PixivError {
+  error: {
+    user_message: string;
+    message: string;
+    reason: string;
+    user_message_details: Record<string, any>;
+  };
+}
+
 export enum PixivRankType {
   day,
   week,
@@ -52,3 +61,5 @@ export enum PixivRankType {
   week_original,
   week_rookie,
 }
+
+export type PixivRankData = { illusts: PixivIllust[] };

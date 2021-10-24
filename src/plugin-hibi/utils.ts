@@ -1,10 +1,10 @@
 export function EnumerateType<T>(enumerate: T): (source: string) => keyof T {
-  const values = Object.values(enumerate).filter(
-    (v) => typeof v === "number" && typeof enumerate[v] === "string"
-  ) as T[];
   const keys = Object.keys(enumerate).filter(
-    (v) => typeof v === "string" && typeof enumerate[v] === "number"
-  ) as (keyof T)[];
+      (v) => typeof v === "string" && typeof enumerate[v] === "number"
+    ) as (keyof T)[],
+    values = Object.values(enumerate).filter(
+      (v) => typeof v === "number" && typeof enumerate[v] === "string"
+    ) as T[];
   const valueMap = Object.fromEntries(values.map((v, i) => [v, keys[i]]));
 
   if (keys.length !== values.length || keys.length <= 0)
@@ -37,12 +37,6 @@ export function BoundedNumber(options: {
     return value;
   };
 }
-
-export const proxyPixivImage = (source: string): string => {
-  const url = new URL(source);
-  url.host = "pximg.obfs.dev";
-  return url.href;
-};
 
 export const randomChoice = <T>(array: T[]): T | undefined => {
   return array.length > 0
