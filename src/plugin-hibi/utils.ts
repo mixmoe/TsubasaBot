@@ -1,3 +1,5 @@
+import { segment } from "koishi";
+
 export function EnumerateType<T>(enumerate: T): (source: string) => keyof T {
   const keys = Object.keys(enumerate).filter(
       (v) => typeof v === "string" && typeof enumerate[v] === "number"
@@ -43,3 +45,12 @@ export const randomChoice = <T>(array: T[]): T | undefined => {
     ? array[Math.floor(Math.random() * array.length)]
     : undefined;
 };
+
+export const imageSegment = (options: { file: string; cache?: boolean }) =>
+  segment("image", options);
+
+export const cardImageSegment = (options: {
+  file: string;
+  source?: string;
+  icon?: string;
+}) => segment("cardimage", options);

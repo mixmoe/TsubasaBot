@@ -16,53 +16,49 @@ export function proxyPixivImage(source: string): string {
   return url.toString();
 }
 
-export async function rank(options: {
+export function apiCallerFactory<T, P extends {}>(
+  endpoint: `pixiv/${string}`
+): (options: P) => Promise<T> {
+  return async (options: P) => {
+    const result = await hibi.get<T | PixivError>(endpoint, {
+      params: { ...options },
+    });
+    if ("error" in result.data) {
+      throw new Error(result.data.error.user_message);
+    }
+    return result.data;
+  };
+}
+
+type PixivRankOptions = {
   mode?: keyof typeof PixivRankType;
   date?: string;
-}): Promise<PixivRankData> {
-  const response = await hibi.get<PixivRankData | PixivError>(`pixiv/rank`, {
-    params: { ...options },
-  });
-  if ("error" in response.data)
-    throw new Error(response.data.error.user_message);
-  return response.data;
-}
+};
 
-export async function illust(id: number): Promise<PixivIllustData> {
-  const response = await hibi.get<PixivIllustData | PixivError>(
-    `pixiv/illust`,
-    {
-      params: { id },
-    }
-  );
-  if ("error" in response.data)
-    throw new Error(response.data.error.user_message);
-  return response.data;
-}
+export const rank = apiCallerFactory<PixivRankData, PixivRankOptions>(
+  "pixiv/rank"
+);
 
-export async function member(id: number): Promise<PixivMemberData> {
-  const response = await hibi.get<PixivMemberData | PixivError>(
-    `pixiv/member`,
-    {
-      params: { id },
-    }
-  );
-  if ("error" in response.data)
-    throw new Error(response.data.error.user_message);
-  return response.data;
-}
+type PixivIllustOptions = { id: number };
 
-export async function memberIllust(
-  id: number,
-  options: { type?: keyof typeof PixivIllustType; page?: number }
-): Promise<PixivMemberIllustData> {
-  const response = await hibi.get<PixivMemberIllustData | PixivError>(
-    `pixiv/member_illust`,
-    {
-      params: { ...options, id },
-    }
-  );
-  if ("error" in response.data)
-    throw new Error(response.data.error.user_message);
-  return response.data;
-}
+export const illust = apiCallerFactory<PixivIllustData, PixivIllustOptions>(
+  "pixiv/illust"
+);
+
+type PixivMemberOptions = { id: number };
+
+export const member = apiCallerFactory<PixivMemberData, PixivMemberOptions>(
+  "pixiv/member"
+);
+
+type PixivMemberIllustOptions = {
+  id: number;
+  type?: keyof typeof PixivIllustType;
+  page?: number;
+};
+
+export const memberIllust = apiCallerFactory<
+  PixivMemberIllustData,
+  PixivMemberIllustOptions
+>("pixiv/member_illust");
+
