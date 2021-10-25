@@ -39,7 +39,7 @@ function ranking(command: Command) {
     .alias("一图")
     .option("type", "-t <type> 排行榜类型", {
       type: EnumerateType(PixivRankType),
-      fallback: PixivRankType.week,
+      fallback: PixivRankType[PixivRankType.week],
     })
     .option("date", "-d <date:date> 排行榜日期, 格式yyyy-mm-dd", {
       fallback: null,
