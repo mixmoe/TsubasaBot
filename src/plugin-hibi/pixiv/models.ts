@@ -121,10 +121,32 @@ export enum PixivIllustType {
   manga,
 }
 
+export enum PixivSearchType {
+  partial_match_for_tags,
+  exact_match_for_tags,
+  title_and_caption,
+}
+
+export enum PixivSearchOrderType {
+  date_desc,
+  date_asc,
+}
+
+export enum PixivSearchDurationType {
+  within_last_day,
+  within_last_week,
+  within_last_month,
+}
+
 export type PixivRankData = { illusts: PixivIllust[] };
 export type PixivIllustData = { illust: PixivIllust };
 export type PixivMemberData = PixivMember;
 export type PixivMemberIllustData = {
   illusts: PixivIllust[];
   next_url: string;
+};
+export type PixivIllustSearchData = {
+  illusts: PixivIllust[];
+  next_url: string;
+  search_span_limit: number;
 };

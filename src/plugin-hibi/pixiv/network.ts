@@ -6,6 +6,10 @@ import {
   PixivMemberData,
   PixivIllustType,
   PixivMemberIllustData,
+  PixivSearchOrderType,
+  PixivSearchType,
+  PixivSearchDurationType,
+  PixivIllustSearchData,
 } from "./models";
 import { hibi } from "../network";
 
@@ -62,3 +66,15 @@ export const memberIllust = apiCallerFactory<
   PixivMemberIllustOptions
 >("pixiv/member_illust");
 
+type PixivIllustSearchOptions = {
+  word: string;
+  page?: number;
+  mode?: keyof typeof PixivSearchType;
+  order?: keyof typeof PixivSearchOrderType;
+  duration?: keyof typeof PixivSearchDurationType;
+};
+
+export const illustSearch = apiCallerFactory<
+  PixivIllustSearchData,
+  PixivIllustSearchOptions
+>("pixiv/search");
