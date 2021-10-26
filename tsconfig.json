@@ -13,12 +13,10 @@
         "outDir": "./dist",
         "baseUrl": "./",
         "incremental": true,
-        "lib": [
-            "ES2019.Object"
-        ]
     },
     "ts-node": {
         "transpileOnly": true,
         "transpiler": "ts-node/transpilers/swc-experimental"
+        
     }
 }
