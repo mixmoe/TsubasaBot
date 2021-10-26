@@ -1,0 +1,13 @@
+{
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "editor.formatOnSave": true,
+    "npm.packageManager": "pnpm",
+    "cSpell.words": [
+        "hibi",
+        "illusts",
+        "koishi",
+        "mangas",
+        "Pixiv",
+        "posint"
+    ]
+}
