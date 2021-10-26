@@ -1,3 +1,5 @@
+accounts/**
+
 *.log
 
 node_modules
