@@ -8,7 +8,13 @@ import {
 } from "../utils";
 import { proxyPixivImage } from "./network";
 import * as pixiv from "./network";
-import { PixivIllustType, PixivRankType } from "./models";
+import {
+  PixivIllustType,
+  PixivRankType,
+  PixivSearchDurationType,
+  PixivSearchOrderType,
+  PixivSearchType,
+} from "./models";
 import * as dayjs from "dayjs";
 
 const imageSendLimit = BoundedNumber({ le: 3, ge: 1 });
@@ -22,20 +28,22 @@ template.set("hibi.pixiv", {
 标题: {{title}} (ID: {{illustId}})
 作者: {{member}} (ID: {{memberId}})
 
-该作品共有 {{total}} 张图片, 将会发送前 {{send}} 张
-`.trim(),
+该作品共有 {{total}} 张图片, 将会发送前 {{send}} 张`.trim(),
   member: `
 {{avatar}}
 作者: {{member}} (ID: {{memberId}})
 共 {{illusts}} 份插画, 共获得了 {{bookmarks}} 个收藏
 
-本页共有 {{total}} 张图片, 将会发送本页人气最高的前 {{send}} 张
-`.trim(),
+本页共有 {{total}} 张图片, 将会发送本页人气最高的前 {{send}} 张`.trim(),
+  search: `
+关于 {{keyword}} 的 Pixiv 搜索结果第 {{page}} 页
+
+共搜索到 {{total}} 条结果, 将会发送本页人气最高的前 {{send}} 张`.trim(),
 });
 
-function ranking(command: Command) {
-  command
-    .subcommand("pixiv.ranking")
+function ranking(ctx: Context) {
+  ctx
+    .command("hibi/pixiv.ranking")
     .alias("一图")
     .option("type", "-t <type> 排行榜类型", {
       type: EnumerateType(PixivRankType),
@@ -101,9 +109,9 @@ function ranking(command: Command) {
     });
 }
 
-function illust(command: Command) {
-  command
-    .subcommand("pixiv.illust <id:posint>")
+function illust(ctx: Context) {
+  ctx
+    .command("hibi/pixiv.illust <id:posint>")
     .alias("点图", "p站点图", "pixiv点图")
     .option("limit", "-l <size:number> 最多发送图片数量", {
       type: imageSendLimit,
@@ -144,9 +152,9 @@ function illust(command: Command) {
     });
 }
 
-function member(command: Command) {
-  command
-    .subcommand("pixiv.member <id:posint>")
+function member(ctx: Context) {
+  ctx
+    .command("hibi/pixiv.member <id:posint>")
     .alias("p站用户", "p站用户信息", "画师")
     .option("limit", "-l <size:number> 最多发送图片数量", {
       type: imageSendLimit,
@@ -198,9 +206,64 @@ function member(command: Command) {
     });
 }
 
+function search(ctx: Context) {
+  ctx
+    .command("hibi/pixiv.search <keyword:string>")
+    .alias("p站搜图", "pixiv搜图")
+    .option("limit", "-l <size:number> 最多发送图片数量", {
+      type: imageSendLimit,
+      fallback: 3,
+    })
+    .option("page", "-p <page:posint> 页数", { fallback: 1 })
+    .option("type", "-t <type> 搜索类型", {
+      type: EnumerateType(PixivSearchType),
+      fallback: undefined,
+    })
+    .option("order", "-o <order> 结果顺序", {
+      type: EnumerateType(PixivSearchOrderType),
+      fallback: undefined,
+    })
+    .option("duration", "-d <duration> 搜索时间区间", {
+      type: EnumerateType(PixivSearchDurationType),
+      fallback: undefined,
+    })
+    .action(async ({ options, session }, keyword) => {
+      await session?.send(template("hibi.pixiv.startPrompt"));
+
+      let { illusts } = await pixiv.illustSearch({
+        word: keyword,
+        page: options?.page,
+        mode: options?.type,
+        order: options?.order,
+        duration: options?.duration,
+      });
+      await session?.send(
+        template("hibi.pixiv.search", {
+          keyword,
+          page: options?.page,
+          total: illusts.length,
+          send: options?.limit,
+        })
+      );
+
+      illusts = illusts
+        .sort(
+          (a, b) =>
+            a.total_bookmarks / a.total_view - b.total_bookmarks / b.total_view
+        )
+        .reverse()
+        .slice(0, options?.limit);
+      for (const illust of illusts) {
+        await session?.send(
+          cardImageSegment({
+            file: proxyPixivImage(illust.image_urls.large),
+            source: template("hibi.pixiv.sourceShow", illust.id),
+          })
+        );
+      }
+    });
+}
+
 export function apply(ctx: Context) {
-  const command = ctx.command("hibi");
-  ranking(command);
-  illust(command);
-  member(command);
+  ctx.plugin(ranking).plugin(illust).plugin(member).plugin(search);
 }
