@@ -2,40 +2,42 @@ lockfileVersion: 5.3
 
 specifiers:
   '@koishijs/cli': ^4.0.0-alpha.6
-  '@koishijs/plugin-adapter-onebot': ^4.0.0-alpha.9
+  '@koishijs/plugin-adapter-onebot': ^4.0.0-alpha.10
   '@koishijs/plugin-chat': ^1.0.0-alpha.9
   '@koishijs/plugin-common': ^5.0.0-alpha.10
   '@koishijs/plugin-database-sqlite': ^1.0.0-alpha.2
-  '@koishijs/plugin-gocqhttp': ^1.0.0-alpha.3
+  '@koishijs/plugin-gocqhttp': ^1.0.0-alpha.4
+  '@koishijs/plugin-status': ^5.0.0-alpha.10
   '@swc/core': ^1.2.102
   '@swc/helpers': ^0.2.13
-  '@types/node': ^16.11.4
+  '@types/node': ^16.11.6
   axios: ^0.23.0
   dayjs: ^1.10.7
   dotenv: ^10.0.0
-  koishi: ^4.0.0-alpha.10
+  koishi: ^4.0.0-alpha.12
   regenerator-runtime: ^0.13.9
   ts-node: ^10.4.0
   typescript: ^4.4.4
 
 dependencies:
   '@koishijs/cli': 4.0.0-alpha.6
-  '@koishijs/plugin-adapter-onebot': 4.0.0-alpha.9_koishi@4.0.0-alpha.10
-  '@koishijs/plugin-chat': 1.0.0-alpha.9_koishi@4.0.0-alpha.10
-  '@koishijs/plugin-common': 5.0.0-alpha.10_koishi@4.0.0-alpha.10
-  '@koishijs/plugin-database-sqlite': 1.0.0-alpha.2_koishi@4.0.0-alpha.10
-  '@koishijs/plugin-gocqhttp': 1.0.0-alpha.3_3ad82a53cfa534043c15f28bdaa51a50
+  '@koishijs/plugin-adapter-onebot': 4.0.0-alpha.10_koishi@4.0.0-alpha.12
+  '@koishijs/plugin-chat': 1.0.0-alpha.9_koishi@4.0.0-alpha.12
+  '@koishijs/plugin-common': 5.0.0-alpha.10_koishi@4.0.0-alpha.12
+  '@koishijs/plugin-database-sqlite': 1.0.0-alpha.2_koishi@4.0.0-alpha.12
+  '@koishijs/plugin-gocqhttp': 1.0.0-alpha.4_79e5f0b1b4c9b992dabe5d4624717c75
+  '@koishijs/plugin-status': 5.0.0-alpha.10_koishi@4.0.0-alpha.12
   axios: 0.23.0
   dayjs: 1.10.7
   dotenv: 10.0.0
-  koishi: 4.0.0-alpha.10
+  koishi: 4.0.0-alpha.12
 
 devDependencies:
-  '@swc/core': 1.2.102
+  '@swc/core': 1.2.103
   '@swc/helpers': 0.2.13
-  '@types/node': 16.11.4
+  '@types/node': 16.11.6
   regenerator-runtime: 0.13.9
-  ts-node: 10.4.0_155e6d258347c30dc0f3347a4c10d203
+  ts-node: 10.4.0_b5c8bfded11688b6c4b7593c308d7194
   typescript: 4.4.4
 
 packages:
@@ -74,26 +76,27 @@ packages:
       chokidar: 3.5.2
       js-yaml: 4.1.0
       kleur: 4.1.4
-      koishi: 4.0.0-alpha.10
+      koishi: 4.0.0-alpha.12
       prompts: 2.4.2
     transitivePeerDependencies:
+      - debug
       - supports-color
     dev: false
 
-  /@koishijs/core/4.0.0-alpha.10:
-    resolution: {integrity: sha1-sl9DpEuIGjqU2gNWZJH65jn58IM=, tarball: '@koishijs/core/download/@koishijs/core-4.0.0-alpha.10.tgz'}
+  /@koishijs/core/4.0.0-alpha.11:
+    resolution: {integrity: sha1-42amWPeXTqYsWTt8IcbqT6S/up4=, tarball: '@koishijs/core/download/@koishijs/core-4.0.0-alpha.11.tgz'}
     engines: {node: '>=12.0.0'}
     dependencies:
-      '@koishijs/utils': 5.0.0-alpha.6
+      '@koishijs/utils': 5.0.0-alpha.7
       fastest-levenshtein: 1.0.12
     dev: false
 
-  /@koishijs/plugin-adapter-onebot/4.0.0-alpha.9_koishi@4.0.0-alpha.10:
-    resolution: {integrity: sha1-OuqJYDSJVZXv7xPpDNsPVE4dT6k=, tarball: '@koishijs/plugin-adapter-onebot/download/@koishijs/plugin-adapter-onebot-4.0.0-alpha.9.tgz'}
+  /@koishijs/plugin-adapter-onebot/4.0.0-alpha.10_koishi@4.0.0-alpha.12:
+    resolution: {integrity: sha1-0XpMuQwLTTv+nTv0ExXRDgYbFbI=, tarball: '@koishijs/plugin-adapter-onebot/download/@koishijs/plugin-adapter-onebot-4.0.0-alpha.10.tgz'}
     peerDependencies:
-      koishi: ^4.0.0-alpha.10
+      koishi: ^4.0.0-alpha.12
     dependencies:
-      koishi: 4.0.0-alpha.10
+      koishi: 4.0.0-alpha.12
       qface: 1.2.0
       ws: 8.2.3
     transitivePeerDependencies:
@@ -101,67 +104,96 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@koishijs/plugin-cache-lru/1.0.0-alpha.1_koishi@4.0.0-alpha.10:
-    resolution: {integrity: sha1-JmVcuO05iOfs9oFEIQN/XhClW+4=, tarball: '@koishijs/plugin-cache-lru/download/@koishijs/plugin-cache-lru-1.0.0-alpha.1.tgz'}
+  /@koishijs/plugin-cache-lru/1.0.0-alpha.2_koishi@4.0.0-alpha.12:
+    resolution: {integrity: sha1-RHnYV+IEBBlOF7R1JO0Br8k+kMY=, tarball: '@koishijs/plugin-cache-lru/download/@koishijs/plugin-cache-lru-1.0.0-alpha.2.tgz'}
     peerDependencies:
-      koishi: ^4.0.0-alpha.10
+      koishi: ^4.0.0-alpha.12
     dependencies:
-      koishi: 4.0.0-alpha.10
+      koishi: 4.0.0-alpha.12
       lru-cache: 6.0.0
     dev: false
 
-  /@koishijs/plugin-chat/1.0.0-alpha.9_koishi@4.0.0-alpha.10:
+  /@koishijs/plugin-chat/1.0.0-alpha.9_koishi@4.0.0-alpha.12:
     resolution: {integrity: sha1-iIlo7t70OK8iuUGdGTuNL9kAEPE=, tarball: '@koishijs/plugin-chat/download/@koishijs/plugin-chat-1.0.0-alpha.9.tgz'}
     peerDependencies:
       koishi: ^4.0.0-alpha.11
     dependencies:
-      koishi: 4.0.0-alpha.10
+      koishi: 4.0.0-alpha.12
     dev: false
 
-  /@koishijs/plugin-common/5.0.0-alpha.10_koishi@4.0.0-alpha.10:
+  /@koishijs/plugin-common/5.0.0-alpha.10_koishi@4.0.0-alpha.12:
     resolution: {integrity: sha1-N8XuYY2g84UAJJKR/ztUbg2YxXc=, tarball: '@koishijs/plugin-common/download/@koishijs/plugin-common-5.0.0-alpha.10.tgz'}
     peerDependencies:
       koishi: ^4.0.0-alpha.10
     dependencies:
-      koishi: 4.0.0-alpha.10
+      koishi: 4.0.0-alpha.12
     dev: false
 
-  /@koishijs/plugin-database-sqlite/1.0.0-alpha.2_koishi@4.0.0-alpha.10:
+  /@koishijs/plugin-database-sqlite/1.0.0-alpha.2_koishi@4.0.0-alpha.12:
     resolution: {integrity: sha1-/Z6q0n+wmLreBPMqA6zRtgFAQz4=, tarball: '@koishijs/plugin-database-sqlite/download/@koishijs/plugin-database-sqlite-1.0.0-alpha.2.tgz'}
     peerDependencies:
       koishi: ^4.0.0-alpha.10
     dependencies:
-      '@koishijs/sql-utils': 1.0.0-alpha.2_koishi@4.0.0-alpha.10
+      '@koishijs/sql-utils': 1.0.0-alpha.2_koishi@4.0.0-alpha.12
       better-sqlite3: 7.4.3
-      koishi: 4.0.0-alpha.10
+      koishi: 4.0.0-alpha.12
       sqlstring-sqlite: 0.1.1
     dev: false
 
-  /@koishijs/plugin-gocqhttp/1.0.0-alpha.3_3ad82a53cfa534043c15f28bdaa51a50:
-    resolution: {integrity: sha1-mG7Ve18J0s3qwdXdxUFd/Nq7MP4=, tarball: '@koishijs/plugin-gocqhttp/download/@koishijs/plugin-gocqhttp-1.0.0-alpha.3.tgz'}
+  /@koishijs/plugin-gocqhttp/1.0.0-alpha.4_79e5f0b1b4c9b992dabe5d4624717c75:
+    resolution: {integrity: sha1-HV0xvSEcb4K+2Q5QndfwPHBZfQk=, tarball: '@koishijs/plugin-gocqhttp/download/@koishijs/plugin-gocqhttp-1.0.0-alpha.4.tgz'}
     requiresBuild: true
     peerDependencies:
-      '@koishijs/plugin-adapter-onebot': ^4.0.0-alpha.9
-      koishi: ^4.0.0-alpha.11
+      '@koishijs/plugin-adapter-onebot': ^4.0.0-alpha.10
+      koishi: ^4.0.0-alpha.12
     dependencies:
-      '@koishijs/plugin-adapter-onebot': 4.0.0-alpha.9_koishi@4.0.0-alpha.10
+      '@koishijs/plugin-adapter-onebot': 4.0.0-alpha.10_koishi@4.0.0-alpha.12
       axios: 0.22.0
       cross-spawn: 7.0.3
-      koishi: 4.0.0-alpha.10
+      koishi: 4.0.0-alpha.12
       tar: 6.1.11
+    transitivePeerDependencies:
+      - debug
     dev: false
 
-  /@koishijs/sql-utils/1.0.0-alpha.2_koishi@4.0.0-alpha.10:
+  /@koishijs/plugin-status/5.0.0-alpha.10_koishi@4.0.0-alpha.12:
+    resolution: {integrity: sha1-Sw19YjadQmszM2qpXVzWLH5fRXw=, tarball: '@koishijs/plugin-status/download/@koishijs/plugin-status-5.0.0-alpha.10.tgz'}
+    peerDependencies:
+      koishi: ^4.0.0-alpha.12
+    dependencies:
+      '@koishijs/ui-console': 1.0.0-alpha.7_cf2995c37b3e92391a71278d89ecd067
+      koishi: 4.0.0-alpha.12
+      open: 8.4.0
+      semver: 7.3.5
+      systeminformation: 5.9.8
+      throttle-debounce: 3.0.1
+      uuid: 8.3.2
+      ws: 8.2.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
+  /@koishijs/sql-utils/1.0.0-alpha.2_koishi@4.0.0-alpha.12:
     resolution: {integrity: sha1-MsHEVdo7TN6pacQzl0U5yo7mZhE=, tarball: '@koishijs/sql-utils/download/@koishijs/sql-utils-1.0.0-alpha.2.tgz'}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       koishi: ^4.0.0-alpha.10
     dependencies:
-      koishi: 4.0.0-alpha.10
+      koishi: 4.0.0-alpha.12
     dev: false
 
-  /@koishijs/utils/5.0.0-alpha.6:
-    resolution: {integrity: sha1-xoBkr8UaGcqnJYGO4V2aPpKT7Jg=, tarball: '@koishijs/utils/download/@koishijs/utils-5.0.0-alpha.6.tgz'}
+  /@koishijs/ui-console/1.0.0-alpha.7_cf2995c37b3e92391a71278d89ecd067:
+    resolution: {integrity: sha1-kXmx/1N50sMFRaOmMsShm4IdY2M=, tarball: '@koishijs/ui-console/download/@koishijs/ui-console-1.0.0-alpha.7.tgz'}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@koishijs/plugin-status': ^5.0.0-alpha.10
+    dependencies:
+      '@koishijs/plugin-status': 5.0.0-alpha.10_koishi@4.0.0-alpha.12
+    dev: false
+
+  /@koishijs/utils/5.0.0-alpha.7:
+    resolution: {integrity: sha1-S9lRTy51Vntj4o6Td427lY71p8I=, tarball: '@koishijs/utils/download/@koishijs/utils-5.0.0-alpha.7.tgz'}
     dependencies:
       supports-color: 8.1.1
     dev: false
@@ -176,8 +208,8 @@ packages:
       '@napi-rs/triples': 1.0.3
     dev: true
 
-  /@swc/core-android-arm64/1.2.102:
-    resolution: {integrity: sha1-lypHIXBTzHWfC8AwilCCed4SR7o=, tarball: '@swc/core-android-arm64/download/@swc/core-android-arm64-1.2.102.tgz'}
+  /@swc/core-android-arm64/1.2.103:
+    resolution: {integrity: sha1-OKbBt7PWlWD++f++ELNQ9PYBz/4=, tarball: '@swc/core-android-arm64/download/@swc/core-android-arm64-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [android]
@@ -185,8 +217,8 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core-darwin-arm64/1.2.102:
-    resolution: {integrity: sha1-F5WkCA0QYMqKxS8hjMTGS3On7wY=, tarball: '@swc/core-darwin-arm64/download/@swc/core-darwin-arm64-1.2.102.tgz'}
+  /@swc/core-darwin-arm64/1.2.103:
+    resolution: {integrity: sha1-EuX7vHdCZVnJeH9/EfJuR1o0eyA=, tarball: '@swc/core-darwin-arm64/download/@swc/core-darwin-arm64-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [darwin]
@@ -194,8 +226,8 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core-darwin-x64/1.2.102:
-    resolution: {integrity: sha1-9Iq1uLVnmNNqzTiDjGLrC+SvPEs=, tarball: '@swc/core-darwin-x64/download/@swc/core-darwin-x64-1.2.102.tgz'}
+  /@swc/core-darwin-x64/1.2.103:
+    resolution: {integrity: sha1-ky/+DdNmp+Z8BsnuOvOakii8MMo=, tarball: '@swc/core-darwin-x64/download/@swc/core-darwin-x64-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [darwin]
@@ -203,8 +235,17 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core-linux-arm-gnueabihf/1.2.102:
-    resolution: {integrity: sha1-phfOpPWi/xqsn2aNoS3XpqCmcA0=, tarball: '@swc/core-linux-arm-gnueabihf/download/@swc/core-linux-arm-gnueabihf-1.2.102.tgz'}
+  /@swc/core-freebsd-x64/1.2.103:
+    resolution: {integrity: sha1-hqjuqMjvN6dZb2XUp94kwIal4bU=, tarball: '@swc/core-freebsd-x64/download/@swc/core-freebsd-x64-1.2.103.tgz'}
+    engines: {node: '>=10'}
+    cpu: [x64]
+    os: [freebsd]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@swc/core-linux-arm-gnueabihf/1.2.103:
+    resolution: {integrity: sha1-jzbQvCACqiaibqmVJky6CrLOeug=, tarball: '@swc/core-linux-arm-gnueabihf/download/@swc/core-linux-arm-gnueabihf-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [arm]
     os: [linux]
@@ -212,8 +253,8 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core-linux-arm64-gnu/1.2.102:
-    resolution: {integrity: sha1-CrzLJq9ReDvhQd6ot68Lqg3MVbQ=, tarball: '@swc/core-linux-arm64-gnu/download/@swc/core-linux-arm64-gnu-1.2.102.tgz'}
+  /@swc/core-linux-arm64-gnu/1.2.103:
+    resolution: {integrity: sha1-F0VxewaKRUAIkMKayAMSace4GBA=, tarball: '@swc/core-linux-arm64-gnu/download/@swc/core-linux-arm64-gnu-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
@@ -221,8 +262,8 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core-linux-arm64-musl/1.2.102:
-    resolution: {integrity: sha1-qweSM2JqNVmVuOJeNmanWe3/4cU=, tarball: '@swc/core-linux-arm64-musl/download/@swc/core-linux-arm64-musl-1.2.102.tgz'}
+  /@swc/core-linux-arm64-musl/1.2.103:
+    resolution: {integrity: sha1-j4Gkfa/7CFN8l4O1O757l3YtBnY=, tarball: '@swc/core-linux-arm64-musl/download/@swc/core-linux-arm64-musl-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [linux]
@@ -230,8 +271,8 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core-linux-x64-gnu/1.2.102:
-    resolution: {integrity: sha1-YzZpj/riKkkeeCy5q3R4EwzrIkA=, tarball: '@swc/core-linux-x64-gnu/download/@swc/core-linux-x64-gnu-1.2.102.tgz'}
+  /@swc/core-linux-x64-gnu/1.2.103:
+    resolution: {integrity: sha1-b5fBg+cPB0O87kNrpS4AqablLPo=, tarball: '@swc/core-linux-x64-gnu/download/@swc/core-linux-x64-gnu-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
@@ -239,8 +280,8 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core-linux-x64-musl/1.2.102:
-    resolution: {integrity: sha1-ufVX3VNkcxisbdgy8XTv6Oc4bho=, tarball: '@swc/core-linux-x64-musl/download/@swc/core-linux-x64-musl-1.2.102.tgz'}
+  /@swc/core-linux-x64-musl/1.2.103:
+    resolution: {integrity: sha1-BXOAdQOBRCJQgQVyatqv0sZD5dg=, tarball: '@swc/core-linux-x64-musl/download/@swc/core-linux-x64-musl-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [linux]
@@ -248,8 +289,8 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core-win32-arm64-msvc/1.2.102:
-    resolution: {integrity: sha1-58eVjwwq2x6Do3Xg2NavZz5TFQ0=, tarball: '@swc/core-win32-arm64-msvc/download/@swc/core-win32-arm64-msvc-1.2.102.tgz'}
+  /@swc/core-win32-arm64-msvc/1.2.103:
+    resolution: {integrity: sha1-9+5SFrS/faTR9CZR0hmvNNgdSk8=, tarball: '@swc/core-win32-arm64-msvc/download/@swc/core-win32-arm64-msvc-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [arm64]
     os: [win32]
@@ -257,8 +298,8 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core-win32-ia32-msvc/1.2.102:
-    resolution: {integrity: sha1-8UyTrAyLLsA6jVQ4uGVR2WLaSww=, tarball: '@swc/core-win32-ia32-msvc/download/@swc/core-win32-ia32-msvc-1.2.102.tgz'}
+  /@swc/core-win32-ia32-msvc/1.2.103:
+    resolution: {integrity: sha1-E4CJI8Mk7xLSXghm0Hqa5/mmINo=, tarball: '@swc/core-win32-ia32-msvc/download/@swc/core-win32-ia32-msvc-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [ia32]
     os: [win32]
@@ -266,8 +307,8 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core-win32-x64-msvc/1.2.102:
-    resolution: {integrity: sha1-48u7WNmRdLe32cHFhGdJHTHcomk=, tarball: '@swc/core-win32-x64-msvc/download/@swc/core-win32-x64-msvc-1.2.102.tgz'}
+  /@swc/core-win32-x64-msvc/1.2.103:
+    resolution: {integrity: sha1-9tERuZHfylRGw9/OkNBednEzvc0=, tarball: '@swc/core-win32-x64-msvc/download/@swc/core-win32-x64-msvc-1.2.103.tgz'}
     engines: {node: '>=10'}
     cpu: [x64]
     os: [win32]
@@ -275,23 +316,24 @@ packages:
     dev: true
     optional: true
 
-  /@swc/core/1.2.102:
-    resolution: {integrity: sha1-xx/SKUH6m3s8Usd41JSrV77vLBc=, tarball: '@swc/core/download/@swc/core-1.2.102.tgz'}
+  /@swc/core/1.2.103:
+    resolution: {integrity: sha1-bjJvyZcXdHruIpEm0FM3Pbi2Cgw=, tarball: '@swc/core/download/@swc/core-1.2.103.tgz'}
     engines: {node: '>=10'}
     dependencies:
       '@node-rs/helper': 1.2.1
     optionalDependencies:
-      '@swc/core-android-arm64': 1.2.102
-      '@swc/core-darwin-arm64': 1.2.102
-      '@swc/core-darwin-x64': 1.2.102
-      '@swc/core-linux-arm-gnueabihf': 1.2.102
-      '@swc/core-linux-arm64-gnu': 1.2.102
-      '@swc/core-linux-arm64-musl': 1.2.102
-      '@swc/core-linux-x64-gnu': 1.2.102
-      '@swc/core-linux-x64-musl': 1.2.102
-      '@swc/core-win32-arm64-msvc': 1.2.102
-      '@swc/core-win32-ia32-msvc': 1.2.102
-      '@swc/core-win32-x64-msvc': 1.2.102
+      '@swc/core-android-arm64': 1.2.103
+      '@swc/core-darwin-arm64': 1.2.103
+      '@swc/core-darwin-x64': 1.2.103
+      '@swc/core-freebsd-x64': 1.2.103
+      '@swc/core-linux-arm-gnueabihf': 1.2.103
+      '@swc/core-linux-arm64-gnu': 1.2.103
+      '@swc/core-linux-arm64-musl': 1.2.103
+      '@swc/core-linux-x64-gnu': 1.2.103
+      '@swc/core-linux-x64-musl': 1.2.103
+      '@swc/core-win32-arm64-msvc': 1.2.103
+      '@swc/core-win32-ia32-msvc': 1.2.103
+      '@swc/core-win32-x64-msvc': 1.2.103
     dev: true
 
   /@swc/helpers/0.2.13:
@@ -322,20 +364,20 @@ packages:
   /@types/accepts/1.3.5:
     resolution: {integrity: sha1-w0vsEVz8dG4E/loFnfTOfns5FXU=, tarball: '@types/accepts/download/@types/accepts-1.3.5.tgz'}
     dependencies:
-      '@types/node': 16.11.4
+      '@types/node': 16.11.6
     dev: false
 
   /@types/body-parser/1.19.1:
     resolution: {integrity: sha1-DAF0xCp9AXuBgwPUtdlpywt1kpw=, tarball: '@types/body-parser/download/@types/body-parser-1.19.1.tgz'}
     dependencies:
       '@types/connect': 3.4.35
-      '@types/node': 16.11.4
+      '@types/node': 16.11.6
     dev: false
 
   /@types/connect/3.4.35:
     resolution: {integrity: sha1-X89q5EXkAh0fwiGaSHPMc6O7KtE=, tarball: '@types/connect/download/@types/connect-3.4.35.tgz'}
     dependencies:
-      '@types/node': 16.11.4
+      '@types/node': 16.11.6
     dev: false
 
   /@types/content-disposition/0.5.4:
@@ -348,13 +390,13 @@ packages:
       '@types/connect': 3.4.35
       '@types/express': 4.17.13
       '@types/keygrip': 1.0.2
-      '@types/node': 16.11.4
+      '@types/node': 16.11.6
     dev: false
 
   /@types/express-serve-static-core/4.17.24:
     resolution: {integrity: sha1-6kH5O/fg1ZzVp2ZlBo7WqraBXAc=, tarball: '@types/express-serve-static-core/download/@types/express-serve-static-core-4.17.24.tgz'}
     dependencies:
-      '@types/node': 16.11.4
+      '@types/node': 16.11.6
       '@types/qs': 6.9.7
       '@types/range-parser': 1.2.4
     dev: false
@@ -396,7 +438,7 @@ packages:
       '@types/http-errors': 1.8.1
       '@types/keygrip': 1.0.2
       '@types/koa-compose': 3.2.5
-      '@types/node': 16.11.4
+      '@types/node': 16.11.6
     dev: false
 
   /@types/koa__router/8.0.8:
@@ -409,8 +451,8 @@ packages:
     resolution: {integrity: sha1-k+Jb+e51/g/YC1lLxP6w6GIRG1o=, tarball: '@types/mime/download/@types/mime-1.3.2.tgz'}
     dev: false
 
-  /@types/node/16.11.4:
-    resolution: {integrity: sha1-kHcRJIItZmOBT3wcm0WmZU2P2WQ=, tarball: '@types/node/download/@types/node-16.11.4.tgz'}
+  /@types/node/16.11.6:
+    resolution: {integrity: sha1-a+96KgrWhM9ukPz+Mc7KvZzgo64=, tarball: '@types/node/download/@types/node-16.11.6.tgz'}
 
   /@types/qs/6.9.7:
     resolution: {integrity: sha1-Y7t9Bn2xB8weRXwwO8JdUR/r9ss=, tarball: '@types/qs/download/@types/qs-6.9.7.tgz'}
@@ -424,13 +466,13 @@ packages:
     resolution: {integrity: sha1-9eDOh5fS18xevtpIpSyWxPpHqNk=, tarball: '@types/serve-static/download/@types/serve-static-1.13.10.tgz'}
     dependencies:
       '@types/mime': 1.3.2
-      '@types/node': 16.11.4
+      '@types/node': 16.11.6
     dev: false
 
   /@types/ws/7.4.7:
     resolution: {integrity: sha1-98OQo296Bnmqad4tUBMZ9PjZtwI=, tarball: '@types/ws/download/@types/ws-7.4.7.tgz'}
     dependencies:
-      '@types/node': 16.11.4
+      '@types/node': 16.11.6
     dev: false
 
   /accepts/1.3.7:
@@ -504,18 +546,24 @@ packages:
     resolution: {integrity: sha1-xnuQ3AVo5cHPKwuFjEO6KOLtpXU=, tarball: axios/download/axios-0.21.4.tgz}
     dependencies:
       follow-redirects: 1.14.4
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /axios/0.22.0:
     resolution: {integrity: sha1-v3AsQftQ+8pFOVidg5oHcRe3myU=, tarball: axios/download/axios-0.22.0.tgz}
     dependencies:
       follow-redirects: 1.14.4
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /axios/0.23.0:
     resolution: {integrity: sha1-sPpdCUio0ddePVY1I4tsRiWwUUk=, tarball: axios/download/axios-0.23.0.tgz}
     dependencies:
       follow-redirects: 1.14.4
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /base64-js/1.5.1:
@@ -718,6 +766,11 @@ packages:
     resolution: {integrity: sha1-pvLc5hL63S7x9Rm3NVHxfoUZmDE=, tarball: deep-is/download/deep-is-0.1.4.tgz}
     dev: false
 
+  /define-lazy-prop/2.0.0:
+    resolution: {integrity: sha1-P3rkIRKbyqrJvHSQXJigAJ7J7n8=, tarball: define-lazy-prop/download/define-lazy-prop-2.0.0.tgz?cache=0&sync_timestamp=1634048730944&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fdefine-lazy-prop%2Fdownload%2Fdefine-lazy-prop-2.0.0.tgz}
+    engines: {node: '>=8'}
+    dev: false
+
   /degenerator/3.0.1:
     resolution: {integrity: sha1-fveOwMhXelREdzCN3x0tbojVH1s=, tarball: degenerator/download/degenerator-3.0.1.tgz}
     engines: {node: '>= 6'}
@@ -842,6 +895,11 @@ packages:
   /follow-redirects/1.14.4:
     resolution: {integrity: sha1-g4/fSKi73XnlLuUfsclOPtmLk3k=, tarball: follow-redirects/download/follow-redirects-1.14.4.tgz}
     engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
     dev: false
 
   /fresh/0.5.2:
@@ -1052,6 +1110,12 @@ packages:
       binary-extensions: 2.2.0
     dev: false
 
+  /is-docker/2.2.1:
+    resolution: {integrity: sha1-M+6r4jz+hvFL3kQIoCwM+4U6zao=, tarball: is-docker/download/is-docker-2.2.1.tgz}
+    engines: {node: '>=8'}
+    hasBin: true
+    dev: false
+
   /is-extglob/2.1.1:
     resolution: {integrity: sha1-qIwCU1eR8C7TfHahueqXc8gz+MI=, tarball: is-extglob/download/is-extglob-2.1.1.tgz}
     engines: {node: '>=0.10.0'}
@@ -1081,6 +1145,13 @@ packages:
   /is-number/7.0.0:
     resolution: {integrity: sha1-dTU0W4lnNNX4DE0GxQlVUnoU8Ss=, tarball: is-number/download/is-number-7.0.0.tgz}
     engines: {node: '>=0.12.0'}
+    dev: false
+
+  /is-wsl/2.2.0:
+    resolution: {integrity: sha1-dKTHbnfKn9P5MvKQwX6jJs0VcnE=, tarball: is-wsl/download/is-wsl-2.2.0.tgz}
+    engines: {node: '>=8'}
+    dependencies:
+      is-docker: 2.2.1
     dev: false
 
   /isarray/0.0.1:
@@ -1176,22 +1247,25 @@ packages:
       - supports-color
     dev: false
 
-  /koishi/4.0.0-alpha.10:
-    resolution: {integrity: sha1-GscSOf/Nc/mVbLZUTXtblhy01W4=, tarball: koishi/download/koishi-4.0.0-alpha.10.tgz}
+  /koishi/4.0.0-alpha.12:
+    resolution: {integrity: sha1-uWnvgIxV+os86sywud6VFYY/guQ=, tarball: koishi/download/koishi-4.0.0-alpha.12.tgz}
     engines: {node: '>=12.0.0'}
     dependencies:
       '@koa/router': 10.1.1
-      '@koishijs/core': 4.0.0-alpha.10
-      '@koishijs/plugin-cache-lru': 1.0.0-alpha.1_koishi@4.0.0-alpha.10
-      '@koishijs/utils': 5.0.0-alpha.6
+      '@koishijs/core': 4.0.0-alpha.11
+      '@koishijs/plugin-cache-lru': 1.0.0-alpha.2_koishi@4.0.0-alpha.12
+      '@koishijs/utils': 5.0.0-alpha.7
       '@types/koa': 2.13.4
       '@types/koa__router': 8.0.8
       '@types/ws': 7.4.7
       axios: 0.21.4
       koa: 2.13.4
       koa-bodyparser: 4.3.0
+      parseurl: 1.3.3
+      path-to-regexp: 6.2.0
       proxy-agent: 5.0.0
     transitivePeerDependencies:
+      - debug
       - supports-color
     dev: false
 
@@ -1343,6 +1417,15 @@ packages:
 
   /only/0.0.2:
     resolution: {integrity: sha1-Kv3oTQPlC5qO3EROMGEKcCle37Q=, tarball: only/download/only-0.0.2.tgz}
+    dev: false
+
+  /open/8.4.0:
+    resolution: {integrity: sha1-NFMhrhj4E4+CVlqRD9xrOejCRPg=, tarball: open/download/open-8.4.0.tgz}
+    engines: {node: '>=12'}
+    dependencies:
+      define-lazy-prop: 2.0.0
+      is-docker: 2.2.1
+      is-wsl: 2.2.0
     dev: false
 
   /optionator/0.8.3:
@@ -1555,6 +1638,14 @@ packages:
     hasBin: true
     dev: false
 
+  /semver/7.3.5:
+    resolution: {integrity: sha1-C2Ich5NI2JmOSw5L6Us/EuYBjvc=, tarball: semver/download/semver-7.3.5.tgz?cache=0&sync_timestamp=1634019726791&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsemver%2Fdownload%2Fsemver-7.3.5.tgz}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      lru-cache: 6.0.0
+    dev: false
+
   /set-blocking/2.0.0:
     resolution: {integrity: sha1-BF+XgtARrppoA93TgrJDkrPYkPc=, tarball: set-blocking/download/set-blocking-2.0.0.tgz}
     dev: false
@@ -1692,6 +1783,13 @@ packages:
       has-flag: 4.0.0
     dev: false
 
+  /systeminformation/5.9.8:
+    resolution: {integrity: sha1-Rw1XgWR0GP0vLslF5QfNUipp1WU=, tarball: systeminformation/download/systeminformation-5.9.8.tgz}
+    engines: {node: '>=4.0.0'}
+    os: [darwin, linux, win32, freebsd, openbsd, netbsd, sunos]
+    hasBin: true
+    dev: false
+
   /tar-fs/2.1.1:
     resolution: {integrity: sha1-SJoVq4Xx8L76uzcLfeT561y+h4Q=, tarball: tar-fs/download/tar-fs-2.1.1.tgz}
     dependencies:
@@ -1724,6 +1822,11 @@ packages:
       yallist: 4.0.0
     dev: false
 
+  /throttle-debounce/3.0.1:
+    resolution: {integrity: sha1-MvlNhN+olPeGyaHykOemRbahmrs=, tarball: throttle-debounce/download/throttle-debounce-3.0.1.tgz}
+    engines: {node: '>=10'}
+    dev: false
+
   /to-regex-range/5.0.1:
     resolution: {integrity: sha1-FkjESq58jZiKMmAY7XL1tN0DkuQ=, tarball: to-regex-range/download/to-regex-range-5.0.1.tgz}
     engines: {node: '>=8.0'}
@@ -1736,7 +1839,7 @@ packages:
     engines: {node: '>=0.6'}
     dev: false
 
-  /ts-node/10.4.0_155e6d258347c30dc0f3347a4c10d203:
+  /ts-node/10.4.0_b5c8bfded11688b6c4b7593c308d7194:
     resolution: {integrity: sha1-aA+IlFiF9ObPRQ5/DWIj3UBIlfc=, tarball: ts-node/download/ts-node-10.4.0.tgz}
     hasBin: true
     peerDependencies:
@@ -1751,12 +1854,12 @@ packages:
         optional: true
     dependencies:
       '@cspotcode/source-map-support': 0.7.0
-      '@swc/core': 1.2.102
+      '@swc/core': 1.2.103
       '@tsconfig/node10': 1.0.8
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
-      '@types/node': 16.11.4
+      '@types/node': 16.11.6
       acorn: 8.5.0
       acorn-walk: 8.2.0
       arg: 4.1.3
@@ -1815,6 +1918,11 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=, tarball: util-deprecate/download/util-deprecate-1.0.2.tgz}
+    dev: false
+
+  /uuid/8.3.2:
+    resolution: {integrity: sha1-gNW1ztJxu5r2xEXyGhoExgbO++I=, tarball: uuid/download/uuid-8.3.2.tgz}
+    hasBin: true
     dev: false
 
   /vary/1.1.2:
