@@ -54,3 +54,17 @@ export const cardImageSegment = (options: {
   source?: string;
   icon?: string;
 }) => segment("cardimage", options);
+
+export const constructForwardMessage = (
+  name: string,
+  uin: number,
+  ...contents: string[]
+) =>
+  contents.map((content) => ({
+    type: "node" as const,
+    data: {
+      name,
+      uin,
+      content,
+    },
+  }));

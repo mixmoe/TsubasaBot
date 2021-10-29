@@ -6,6 +6,7 @@ import {
   imageSegment,
   randomChoice,
 } from "../utils";
+import { sendMultipleImages } from "./utils";
 import { proxyPixivImage } from "./network";
 import * as pixiv from "./network";
 import {
@@ -24,6 +25,7 @@ template.set("hibi.pixiv", {
   notFound: `没有找到相关图片`,
   pageCount: `第{0}张`,
   sourceShow: `ID: {0}`,
+  imageSent:`{{desc}}\n{{image}}`,
   illust: `
 标题: {{title}} (ID: {{illustId}})
 作者: {{member}} (ID: {{memberId}})
@@ -98,14 +100,7 @@ function ranking(ctx: Context) {
         .map(proxyPixivImage)
         .slice(0, options?.limit);
 
-      for (let index = 0; index < images.length; index++) {
-        await session?.send(
-          cardImageSegment({
-            file: images[index],
-            source: template("hibi.pixiv.pageCount", index + 1),
-          })
-        );
-      }
+      await sendMultipleImages(session!, images);
     });
 }
 
@@ -141,14 +136,7 @@ function illust(ctx: Context) {
         .map(proxyPixivImage)
         .slice(0, options?.limit);
 
-      for (let index = 0; index < images.length; index++) {
-        await session?.send(
-          segment("cardimage", {
-            file: images[index],
-            source: template("hibi.pixiv.pageCount", index + 1),
-          })
-        );
-      }
+      await sendMultipleImages(session!, images);
     });
 }
 
@@ -188,21 +176,19 @@ function member(ctx: Context) {
         })
       );
 
-      illusts = illusts
+      const messageSent = illusts
         .sort(
           (a, b) =>
             a.total_bookmarks / a.total_view - b.total_bookmarks / b.total_view
         )
         .reverse()
-        .slice(0, options?.limit);
-      for (const illust of illusts) {
-        await session?.send(
-          cardImageSegment({
-            file: proxyPixivImage(illust.image_urls.large),
-            source: template("hibi.pixiv.sourceShow", illust.id),
-          })
-        );
-      }
+        .slice(0, options?.limit)
+        .map(({ image_urls: { large }, id }) => ({
+          url: proxyPixivImage(large),
+          desc: template("hibi.pixiv.sourceShow", id),
+        }));
+
+      await sendMultipleImages(session!, messageSent);
     });
 }
 
@@ -246,21 +232,19 @@ function search(ctx: Context) {
         })
       );
 
-      illusts = illusts
+      const messageSent = illusts
         .sort(
           (a, b) =>
             a.total_bookmarks / a.total_view - b.total_bookmarks / b.total_view
         )
         .reverse()
-        .slice(0, options?.limit);
-      for (const illust of illusts) {
-        await session?.send(
-          cardImageSegment({
-            file: proxyPixivImage(illust.image_urls.large),
-            source: template("hibi.pixiv.sourceShow", illust.id),
-          })
-        );
-      }
+        .slice(0, options?.limit)
+        .map(({ image_urls: { large }, id }) => ({
+          url: proxyPixivImage(large),
+          desc: template("hibi.pixiv.sourceShow", id),
+        }));
+
+      await sendMultipleImages(session!, messageSent);
     });
 }
 
