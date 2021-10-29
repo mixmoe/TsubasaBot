@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": false,
   "repository": "https://github.com/mixmoe/TsubasaBot",
+  "main": "index.js",
   "scripts": {
     "start": "ts-node ./app.ts"
   },
@@ -15,6 +16,7 @@
     "@koishijs/plugin-gocqhttp": "^1.0.0-alpha.4",
     "@koishijs/plugin-status": "^5.0.0-alpha.10",
     "axios": "^0.23.0",
+    "canvas": "^2.8.0",
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
     "koishi": "^4.0.0-alpha.12"
