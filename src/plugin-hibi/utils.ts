@@ -2,10 +2,10 @@ import { segment, Session } from "koishi";
 
 export function EnumerateType<T>(enumerate: T): (source: string) => keyof T {
   const keys = Object.keys(enumerate).filter(
-      (v) => typeof v === "string" && typeof enumerate[v] === "number"
+      (v) => typeof v === "string" && typeof enumerate[v] === "number",
     ) as (keyof T)[],
     values = Object.values(enumerate).filter(
-      (v) => typeof v === "number" && typeof enumerate[v] === "string"
+      (v) => typeof v === "number" && typeof enumerate[v] === "string",
     ) as T[];
   const valueMap = Object.fromEntries(values.map((v, i) => [v, keys[i]]));
 
@@ -17,7 +17,7 @@ export function EnumerateType<T>(enumerate: T): (source: string) => keyof T {
     if (!choice)
       throw new Error(
         `无效的枚举值, 可用项为:\n` +
-          values.map((value) => `${value}->${valueMap[value]}`).join(`\n`)
+          values.map((value) => `${value}->${valueMap[value]}`).join(`\n`),
       );
     return valueMap[choice];
   };

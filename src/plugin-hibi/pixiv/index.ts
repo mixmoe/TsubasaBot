@@ -80,8 +80,8 @@ function ranking(ctx: Context) {
       });
       const illust = randomChoice(
         response.illusts.filter(({ type }) =>
-          options?.illustType ? type === options.illustType : true
-        )
+          options?.illustType ? type === options.illustType : true,
+        ),
       );
       if (!illust) return template("hibi.pixiv.notFound");
 
@@ -93,11 +93,11 @@ function ranking(ctx: Context) {
           memberId: illust.user.id,
           total: illust.page_count,
           send: options?.limit,
-        })
+        }),
       );
 
       forward.add(
-        ...(await buildSingleIllustMessages(illust, options?.limit!))
+        ...(await buildSingleIllustMessages(illust, options?.limit!)),
       );
 
       await forward.send(session!);
@@ -127,11 +127,11 @@ function illust(ctx: Context) {
           memberId: illust.user.id,
           total: illust.page_count,
           send: options?.limit,
-        })
+        }),
       );
 
       forward.add(
-        ...(await buildSingleIllustMessages(illust, options?.limit!))
+        ...(await buildSingleIllustMessages(illust, options?.limit!)),
       );
 
       await forward.send(session!);
@@ -157,7 +157,7 @@ function member(ctx: Context) {
       const forward = new ForwardMessageBuilder(name, +uin!);
 
       const memberData = await pixiv.member({ id });
-      let { illusts } = await pixiv.memberIllust({
+      const { illusts } = await pixiv.memberIllust({
         id,
         page: options?.page,
         type: options?.illustType,
@@ -166,7 +166,7 @@ function member(ctx: Context) {
       forward.add(
         template("hibi.pixiv.member", {
           avatar: src2segment(
-            mirrorPixivImage(memberData.user.profile_image_urls.medium)
+            mirrorPixivImage(memberData.user.profile_image_urls.medium),
           ),
           member: memberData.user.name,
           memberId: memberData.user.id,
@@ -174,11 +174,11 @@ function member(ctx: Context) {
           bookmarks: memberData.profile.total_illust_bookmarks_public,
           total: illusts.length,
           send: options?.limit,
-        })
+        }),
       );
 
       forward.add(
-        ...(await buildMultiIllustMessages(illusts, options?.limit!))
+        ...(await buildMultiIllustMessages(illusts, options?.limit!)),
       );
 
       await forward.send(session!);
@@ -211,7 +211,7 @@ function search(ctx: Context) {
       const { username: name, userId: uin } = session!;
       const forward = new ForwardMessageBuilder(name, +uin!);
 
-      let { illusts } = await pixiv.illustSearch({
+      const { illusts } = await pixiv.illustSearch({
         word: keyword,
         page: options?.page,
         mode: options?.type,
@@ -224,11 +224,11 @@ function search(ctx: Context) {
           page: options?.page,
           total: illusts.length,
           send: options?.limit,
-        })
+        }),
       );
 
       forward.add(
-        ...(await buildMultiIllustMessages(illusts, options?.limit!))
+        ...(await buildMultiIllustMessages(illusts, options?.limit!)),
       );
 
       await forward.send(session!);

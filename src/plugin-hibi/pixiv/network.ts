@@ -13,8 +13,8 @@ import {
   PixivSearchType,
 } from "./models";
 
-export function apiCallerFactory<T, P extends {}>(
-  endpoint: `pixiv/${string}`
+export function apiCallerFactory<T, P>(
+  endpoint: `pixiv/${string}`,
 ): (options: P) => Promise<T> {
   return async (options: P) => {
     const result = await hibi.get<T | PixivError>(endpoint, {
@@ -33,19 +33,19 @@ type PixivRankOptions = {
 };
 
 export const rank = apiCallerFactory<PixivRankData, PixivRankOptions>(
-  "pixiv/rank"
+  "pixiv/rank",
 );
 
 type PixivIllustOptions = { id: number };
 
 export const illust = apiCallerFactory<PixivIllustData, PixivIllustOptions>(
-  "pixiv/illust"
+  "pixiv/illust",
 );
 
 type PixivMemberOptions = { id: number };
 
 export const member = apiCallerFactory<PixivMemberData, PixivMemberOptions>(
-  "pixiv/member"
+  "pixiv/member",
 );
 
 type PixivMemberIllustOptions = {

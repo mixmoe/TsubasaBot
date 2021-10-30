@@ -5,7 +5,7 @@ import { hibi } from "../network";
 import { src2segment } from "../utils";
 import { PixivIllust } from "./models";
 
-export function randomChoice<T extends unknown>(array: T[]): T | undefined {
+export function randomChoice<T>(array: T[]): T | undefined {
   return array.length > 0
     ? array[Math.floor(Math.random() * array.length)]
     : undefined;
@@ -17,11 +17,11 @@ export function isR18(tags: PixivIllust["tags"]) {
 
 export async function imageAntiCensor(
   url: string,
-  gaussian = false
+  gaussian = false,
 ): Promise<Buffer> {
   const response = await hibi.get(url, { responseType: "arraybuffer" });
   const image = getImageData(
-    await imageFromBuffer(new Uint8Array(<ArrayBuffer>response.data))
+    await imageFromBuffer(new Uint8Array(<ArrayBuffer>response.data)),
   )!;
 
   const canvas = new Canvas(image.width, image.height);
@@ -50,7 +50,7 @@ export function mirrorPixivImage(source: string): string {
 export async function buildMultiIllustMessages(
   illusts: PixivIllust[],
   limit: number,
-  sort = true
+  sort = true,
 ): Promise<string[]> {
   return await Promise.all(
     illusts
@@ -59,7 +59,7 @@ export async function buildMultiIllustMessages(
           ? (a, b) =>
               a.total_bookmarks / a.total_view -
               b.total_bookmarks / b.total_view
-          : undefined
+          : undefined,
       )
       .reverse()
       .slice(0, limit)
@@ -76,16 +76,16 @@ export async function buildMultiIllustMessages(
           src2segment(
             await imageAntiCensor(
               mirrorPixivImage(illust.image_urls.large),
-              isR18(illust.tags)
-            )
-          )
-      )
+              isR18(illust.tags),
+            ),
+          ),
+      ),
   );
 }
 
 export async function buildSingleIllustMessages(
   illust: PixivIllust,
-  limit: number
+  limit: number,
 ): Promise<string[]> {
   const r18 = isR18(illust.tags);
   const buffers = await Promise.all(
@@ -94,7 +94,7 @@ export async function buildSingleIllustMessages(
       : [illust.meta_single_page.original_image_url]
     )
       .slice(0, limit)
-      .map((url) => imageAntiCensor(mirrorPixivImage(url), r18))
+      .map((url) => imageAntiCensor(mirrorPixivImage(url), r18)),
   );
   return buffers.map((buffer) => src2segment(buffer));
 }

@@ -21,7 +21,7 @@ export function apply(ctx: Context) {
         logger: logger.error.bind(this),
         data: false,
         prefixText: false,
-      })
+      }),
   );
   hibi.interceptors.response.use(
     (response) =>
@@ -35,6 +35,6 @@ export function apply(ctx: Context) {
         logger: logger.error.bind(this),
         data: false,
         prefixText: false,
-      })
+      }),
   );
 }
