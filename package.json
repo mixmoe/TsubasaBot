@@ -5,8 +5,8 @@
   "repository": "https://github.com/mixmoe/TsubasaBot",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node ./app.ts",
-    "start": "nodemon ./app.ts",
+    "dev": "nodemon ./app.ts",
+    "start": "ts-node ./app.ts",
     "lint": "eslint .",
     "format": "prettier -w ."
   },
@@ -28,8 +28,6 @@
     "skia-canvas": "^0.9.26"
   },
   "devDependencies": {
-    "@swc/core": "^1.2.105",
-    "@swc/helpers": "^0.2.13",
     "@types/node": "^16.11.6",
     "@types/skia-canvas": "^0.9.2",
     "@typescript-eslint/eslint-plugin": "^5.2.0",

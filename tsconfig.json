@@ -13,9 +13,5 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true
-  },
-  "ts-node": {
-    "transpileOnly": true,
-    "transpiler": "ts-node/transpilers/swc-experimental"
   }
 }
