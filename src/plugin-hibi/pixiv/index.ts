@@ -1,4 +1,4 @@
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import { Context, template } from "koishi";
 import {
   BoundedNumber,
@@ -218,7 +218,8 @@ function search(ctx: Context) {
         order: options?.order,
         duration: options?.duration,
       });
-      await session?.send(
+
+      forward.add(
         template("hibi.pixiv.search", {
           keyword,
           page: options?.page,
