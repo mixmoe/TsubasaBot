@@ -1,17 +1,17 @@
+import { hibi } from "../network";
 import {
-  PixivRankType,
-  PixivRankData,
   PixivError,
   PixivIllustData,
-  PixivMemberData,
+  PixivIllustSearchData,
   PixivIllustType,
+  PixivMemberData,
   PixivMemberIllustData,
+  PixivRankData,
+  PixivRankType,
+  PixivSearchDurationType,
   PixivSearchOrderType,
   PixivSearchType,
-  PixivSearchDurationType,
-  PixivIllustSearchData,
 } from "./models";
-import { hibi } from "../network";
 
 export function apiCallerFactory<T, P extends {}>(
   endpoint: `pixiv/${string}`

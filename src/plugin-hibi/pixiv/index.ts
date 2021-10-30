@@ -1,12 +1,11 @@
-import { Context, segment, template } from "koishi";
-import { BoundedNumber, ForwardMessageBuilder, EnumerateType, src2segment } from "../utils";
+import * as dayjs from "dayjs";
+import { Context, template } from "koishi";
 import {
-  randomChoice,
-  buildSingleIllustMessages,
-  buildMultiIllustMessages,
-  mirrorPixivImage,
-} from "./utils";
-import * as pixiv from "./network";
+  BoundedNumber,
+  EnumerateType,
+  ForwardMessageBuilder,
+  src2segment,
+} from "../utils";
 import {
   PixivIllustType,
   PixivRankType,
@@ -14,7 +13,13 @@ import {
   PixivSearchOrderType,
   PixivSearchType,
 } from "./models";
-import * as dayjs from "dayjs";
+import * as pixiv from "./network";
+import {
+  buildMultiIllustMessages,
+  buildSingleIllustMessages,
+  mirrorPixivImage,
+  randomChoice,
+} from "./utils";
 
 const imageSendLimit = BoundedNumber({ le: 5, ge: 1 });
 
@@ -160,7 +165,9 @@ function member(ctx: Context) {
 
       forward.add(
         template("hibi.pixiv.member", {
-          avatar: src2segment(mirrorPixivImage(memberData.user.profile_image_urls.medium)),
+          avatar: src2segment(
+            mirrorPixivImage(memberData.user.profile_image_urls.medium)
+          ),
           member: memberData.user.name,
           memberId: memberData.user.id,
           illusts: memberData.profile.total_illusts,

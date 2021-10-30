@@ -1,9 +1,9 @@
-import { Canvas } from "skia-canvas";
 import { getImageData, imageFromBuffer } from "@canvas/image";
-import { hibi } from "../network";
-import { PixivIllust } from "./models";
 import { template } from "koishi";
+import { Canvas } from "skia-canvas";
+import { hibi } from "../network";
 import { src2segment } from "../utils";
+import { PixivIllust } from "./models";
 
 export function randomChoice<T extends unknown>(array: T[]): T | undefined {
   return array.length > 0
