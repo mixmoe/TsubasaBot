@@ -13,13 +13,6 @@ import {
 } from "./models";
 import { hibi } from "../network";
 
-export function proxyPixivImage(source: string): string {
-  const url = new URL(source);
-  url.host = "pximg.obfs.dev";
-  url.protocol = "https";
-  return url.toString();
-}
-
 export function apiCallerFactory<T, P extends {}>(
   endpoint: `pixiv/${string}`
 ): (options: P) => Promise<T> {

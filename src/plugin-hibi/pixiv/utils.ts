@@ -1,41 +1,100 @@
-import { segment, Session, template } from "koishi";
-import {
-  cardImageSegment,
-  constructForwardMessage,
-  imageSegment,
-} from "../utils";
+import { Canvas } from "skia-canvas";
+import { getImageData, imageFromBuffer } from "@canvas/image";
+import { hibi } from "../network";
+import { PixivIllust } from "./models";
+import { template } from "koishi";
+import { src2segment } from "../utils";
 
-export async function sendMultipleImages(
-  session: Session,
-  images: (string | { desc: string; url: string })[]
-) {
-  const imageMessages = images
-    .map((image, index) =>
-      typeof image === "string"
-        ? { desc: template("hibi.pixiv.pageCount", index + 1), url: image }
-        : image
-    )
-    .map(({ desc, url }) =>
-      template("hibi.pixiv.imageSent", {
-        desc,
-        image: segment("image", { file: url }),
-      })
-    );
+export function randomChoice<T extends unknown>(array: T[]): T | undefined {
+  return array.length > 0
+    ? array[Math.floor(Math.random() * array.length)]
+    : undefined;
+}
 
-  if (!session.userId || !session.onebot) throw new Error("no onebot");
+export function isR18(tags: PixivIllust["tags"]) {
+  return tags.some(({ name }) => name.toLowerCase().startsWith("r-18"));
+}
 
-  if (session.guildId) {
-    await session.onebot.sendGroupForwardMsg(
-      session.guildId,
-      constructForwardMessage(
-        session.username,
-        +session.userId,
-        ...imageMessages
-      )
-    );
-  } else {
-    await Promise.all(
-      imageMessages.map((image) => session.send(image).catch())
-    );
+export async function imageAntiCensor(
+  url: string,
+  gaussian = false
+): Promise<Buffer> {
+  const response = await hibi.get(url, { responseType: "arraybuffer" });
+  const image = getImageData(
+    await imageFromBuffer(new Uint8Array(<ArrayBuffer>response.data))
+  )!;
+
+  const canvas = new Canvas(image.width, image.height);
+  const ctx = canvas.getContext("2d");
+  ctx.putImageData(image, 0, 0);
+
+  if (gaussian) {
+    ctx.filter = "blur(7px)";
+    ctx.drawImage(canvas as any, 0, 0);
+    ctx.filter = "none";
   }
+
+  ctx.fillStyle = "black";
+  ctx.font = "6px mono";
+  ctx.fillText("Sent by TsubasaBot", 0, image.height);
+  return canvas.toBuffer("image/png");
+}
+
+export function mirrorPixivImage(source: string): string {
+  const url = new URL(source);
+  url.host = "pximg.obfs.dev";
+  url.protocol = "https";
+  return url.toString();
+}
+
+export async function buildMultiIllustMessages(
+  illusts: PixivIllust[],
+  limit: number,
+  sort = true
+): Promise<string[]> {
+  return await Promise.all(
+    illusts
+      .sort(
+        sort
+          ? (a, b) =>
+              a.total_bookmarks / a.total_view -
+              b.total_bookmarks / b.total_view
+          : undefined
+      )
+      .reverse()
+      .slice(0, limit)
+      .map(
+        async (illust) =>
+          template("hibi.pixiv.illust", {
+            title: illust.title,
+            illustId: illust.id,
+            member: illust.user.name,
+            memberId: illust.user.id,
+            total: illust.page_count,
+            send: 1,
+          }) +
+          src2segment(
+            await imageAntiCensor(
+              mirrorPixivImage(illust.image_urls.large),
+              isR18(illust.tags)
+            )
+          )
+      )
+  );
+}
+
+export async function buildSingleIllustMessages(
+  illust: PixivIllust,
+  limit: number
+): Promise<string[]> {
+  const r18 = isR18(illust.tags);
+  const buffers = await Promise.all(
+    (!illust.meta_single_page.original_image_url
+      ? illust.meta_pages.map((page) => page.image_urls.original)
+      : [illust.meta_single_page.original_image_url]
+    )
+      .slice(0, limit)
+      .map((url) => imageAntiCensor(mirrorPixivImage(url), r18))
+  );
+  return buffers.map((buffer) => src2segment(buffer));
 }

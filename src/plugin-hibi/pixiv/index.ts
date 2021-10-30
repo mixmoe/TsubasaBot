@@ -1,13 +1,11 @@
-import { Context, Command, segment, template } from "koishi";
+import { Context, segment, template } from "koishi";
+import { BoundedNumber, ForwardMessageBuilder, EnumerateType, src2segment } from "../utils";
 import {
-  BoundedNumber,
-  cardImageSegment,
-  EnumerateType,
-  imageSegment,
   randomChoice,
-} from "../utils";
-import { sendMultipleImages } from "./utils";
-import { proxyPixivImage } from "./network";
+  buildSingleIllustMessages,
+  buildMultiIllustMessages,
+  mirrorPixivImage,
+} from "./utils";
 import * as pixiv from "./network";
 import {
   PixivIllustType,
@@ -18,14 +16,13 @@ import {
 } from "./models";
 import * as dayjs from "dayjs";
 
-const imageSendLimit = BoundedNumber({ le: 3, ge: 1 });
+const imageSendLimit = BoundedNumber({ le: 5, ge: 1 });
 
 template.set("hibi.pixiv", {
   startPrompt: `开始获取图片信息`,
   notFound: `没有找到相关图片`,
   pageCount: `第{0}张`,
-  sourceShow: `ID: {0}`,
-  imageSent:`{{desc}}\n{{image}}`,
+  imageSent: `{{desc}}\n{{image}}`,
   illust: `
 标题: {{title}} (ID: {{illustId}})
 作者: {{member}} (ID: {{memberId}})
@@ -45,18 +42,18 @@ template.set("hibi.pixiv", {
 
 function ranking(ctx: Context) {
   ctx
-    .command("hibi/pixiv.ranking")
+    .command("hibi/pixiv.ranking", {})
     .alias("一图")
     .option("type", "-t <type> 排行榜类型", {
       type: EnumerateType(PixivRankType),
-      fallback: PixivRankType[PixivRankType.week],
+      fallback: undefined,
     })
     .option("date", "-d <date:date> 排行榜日期, 格式yyyy-mm-dd", {
       fallback: null,
     })
     .option("limit", "-l <size:number> 最多发送图片数量", {
       type: imageSendLimit,
-      fallback: 3,
+      fallback: 5,
     })
     .option("illustType", "-i <type> 画作类型", {
       type: EnumerateType(PixivIllustType),
@@ -64,6 +61,8 @@ function ranking(ctx: Context) {
     })
     .action(async ({ options, session }) => {
       await session?.send(template("hibi.pixiv.startPrompt"));
+      const { username: name, userId: uin } = session!;
+      const forward = new ForwardMessageBuilder(name, +uin!);
 
       const inputDate = dayjs(options?.date),
         maximumDate = dayjs().subtract(2, "day");
@@ -81,7 +80,7 @@ function ranking(ctx: Context) {
       );
       if (!illust) return template("hibi.pixiv.notFound");
 
-      await session?.send(
+      forward.add(
         template("hibi.pixiv.illust", {
           title: illust.title,
           illustId: illust.id,
@@ -92,15 +91,11 @@ function ranking(ctx: Context) {
         })
       );
 
-      const images = (
-        !illust.meta_single_page.original_image_url
-          ? illust.meta_pages.map(({ image_urls }) => image_urls.original)
-          : [illust.meta_single_page.original_image_url]
-      )
-        .map(proxyPixivImage)
-        .slice(0, options?.limit);
+      forward.add(
+        ...(await buildSingleIllustMessages(illust, options?.limit!))
+      );
 
-      await sendMultipleImages(session!, images);
+      await forward.send(session!);
     });
 }
 
@@ -110,14 +105,16 @@ function illust(ctx: Context) {
     .alias("点图", "p站点图", "pixiv点图")
     .option("limit", "-l <size:number> 最多发送图片数量", {
       type: imageSendLimit,
-      fallback: 3,
+      fallback: 5,
     })
     .action(async ({ options, session }, id) => {
       await session?.send(template("hibi.pixiv.startPrompt"));
+      const { username: name, userId: uin } = session!;
+      const forward = new ForwardMessageBuilder(name, +uin!);
 
       const { illust } = await pixiv.illust({ id });
 
-      await session?.send(
+      forward.add(
         template("hibi.pixiv.illust", {
           title: illust.title,
           illustId: illust.id,
@@ -128,15 +125,11 @@ function illust(ctx: Context) {
         })
       );
 
-      const images = (
-        !illust.meta_single_page.original_image_url
-          ? illust.meta_pages.map(({ image_urls }) => image_urls.original)
-          : [illust.meta_single_page.original_image_url]
-      )
-        .map(proxyPixivImage)
-        .slice(0, options?.limit);
+      forward.add(
+        ...(await buildSingleIllustMessages(illust, options?.limit!))
+      );
 
-      await sendMultipleImages(session!, images);
+      await forward.send(session!);
     });
 }
 
@@ -146,7 +139,7 @@ function member(ctx: Context) {
     .alias("p站用户", "p站用户信息", "画师")
     .option("limit", "-l <size:number> 最多发送图片数量", {
       type: imageSendLimit,
-      fallback: 3,
+      fallback: 5,
     })
     .option("page", "-p <page:posint> 页数", { fallback: 1 })
     .option("illustType", "-i <type> 画作类型", {
@@ -155,6 +148,8 @@ function member(ctx: Context) {
     })
     .action(async ({ options, session }, id) => {
       await session?.send(template("hibi.pixiv.startPrompt"));
+      const { username: name, userId: uin } = session!;
+      const forward = new ForwardMessageBuilder(name, +uin!);
 
       const memberData = await pixiv.member({ id });
       let { illusts } = await pixiv.memberIllust({
@@ -162,11 +157,10 @@ function member(ctx: Context) {
         page: options?.page,
         type: options?.illustType,
       });
-      await session?.send(
+
+      forward.add(
         template("hibi.pixiv.member", {
-          avatar: imageSegment({
-            file: proxyPixivImage(memberData.user.profile_image_urls.medium),
-          }),
+          avatar: src2segment(mirrorPixivImage(memberData.user.profile_image_urls.medium)),
           member: memberData.user.name,
           memberId: memberData.user.id,
           illusts: memberData.profile.total_illusts,
@@ -176,19 +170,11 @@ function member(ctx: Context) {
         })
       );
 
-      const messageSent = illusts
-        .sort(
-          (a, b) =>
-            a.total_bookmarks / a.total_view - b.total_bookmarks / b.total_view
-        )
-        .reverse()
-        .slice(0, options?.limit)
-        .map(({ image_urls: { large }, id }) => ({
-          url: proxyPixivImage(large),
-          desc: template("hibi.pixiv.sourceShow", id),
-        }));
+      forward.add(
+        ...(await buildMultiIllustMessages(illusts, options?.limit!))
+      );
 
-      await sendMultipleImages(session!, messageSent);
+      await forward.send(session!);
     });
 }
 
@@ -198,7 +184,7 @@ function search(ctx: Context) {
     .alias("p站搜图", "pixiv搜图")
     .option("limit", "-l <size:number> 最多发送图片数量", {
       type: imageSendLimit,
-      fallback: 3,
+      fallback: 5,
     })
     .option("page", "-p <page:posint> 页数", { fallback: 1 })
     .option("type", "-t <type> 搜索类型", {
@@ -215,6 +201,8 @@ function search(ctx: Context) {
     })
     .action(async ({ options, session }, keyword) => {
       await session?.send(template("hibi.pixiv.startPrompt"));
+      const { username: name, userId: uin } = session!;
+      const forward = new ForwardMessageBuilder(name, +uin!);
 
       let { illusts } = await pixiv.illustSearch({
         word: keyword,
@@ -232,19 +220,11 @@ function search(ctx: Context) {
         })
       );
 
-      const messageSent = illusts
-        .sort(
-          (a, b) =>
-            a.total_bookmarks / a.total_view - b.total_bookmarks / b.total_view
-        )
-        .reverse()
-        .slice(0, options?.limit)
-        .map(({ image_urls: { large }, id }) => ({
-          url: proxyPixivImage(large),
-          desc: template("hibi.pixiv.sourceShow", id),
-        }));
+      forward.add(
+        ...(await buildMultiIllustMessages(illusts, options?.limit!))
+      );
 
-      await sendMultipleImages(session!, messageSent);
+      await forward.send(session!);
     });
 }
 
