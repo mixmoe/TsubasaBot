@@ -1,4 +1,4 @@
-import { segment } from "koishi";
+import { segment, Session } from "koishi";
 
 export function EnumerateType<T>(enumerate: T): (source: string) => keyof T {
   const keys = Object.keys(enumerate).filter(
@@ -40,31 +40,40 @@ export function BoundedNumber(options: {
   };
 }
 
-export const randomChoice = <T>(array: T[]): T | undefined => {
-  return array.length > 0
-    ? array[Math.floor(Math.random() * array.length)]
-    : undefined;
-};
+export class ForwardMessageBuilder {
+  public static create(name: string, uin: number, ...contents: string[]) {
+    return contents.map((content) => ({
+      type: "node" as const,
+      data: {
+        name,
+        uin,
+        content,
+      },
+    }));
+  }
 
-export const imageSegment = (options: { file: string; cache?: boolean }) =>
-  segment("image", options);
+  protected readonly messages: string[] = [];
+  constructor(public readonly name: string, public readonly uin: number) {}
 
-export const cardImageSegment = (options: {
-  file: string;
-  source?: string;
-  icon?: string;
-}) => segment("cardimage", options);
+  public add(...contents: string[]) {
+    this.messages.push(...contents);
+    return this;
+  }
 
-export const constructForwardMessage = (
-  name: string,
-  uin: number,
-  ...contents: string[]
-) =>
-  contents.map((content) => ({
-    type: "node" as const,
-    data: {
-      name,
-      uin,
-      content,
-    },
-  }));
+  public build() {
+    return ForwardMessageBuilder.create(this.name, this.uin, ...this.messages);
+  }
+
+  public async send(session: Session) {
+    if (session.onebot && session.guildId) {
+      await session.onebot.sendGroupForwardMsg(+session.guildId, this.build());
+    } else {
+      await Promise.all(this.messages.map((msg) => session.send(msg)));
+    }
+  }
+}
+
+export const src2segment = (src: Buffer | string) =>
+  segment("image", {
+    file: typeof src === "string" ? src : "base64://" + src.toString("base64"),
+  });
