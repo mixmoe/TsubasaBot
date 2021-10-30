@@ -21,6 +21,8 @@ specifiers:
   dayjs: ^1.10.7
   dotenv: ^10.0.0
   eslint: ^8.1.0
+  eslint-config-prettier: ^8.3.0
+  eslint-plugin-prettier: ^4.0.0
   koishi: ^4.0.0-alpha.12
   prettier: ^2.4.1
   prettier-plugin-organize-imports: ^2.3.4
@@ -54,6 +56,8 @@ devDependencies:
   '@typescript-eslint/eslint-plugin': 5.2.0_9a56ca1c5fc1d82b3da3317a5c6f9ab1
   '@typescript-eslint/parser': 5.2.0_eslint@8.1.0+typescript@4.4.4
   eslint: 8.1.0
+  eslint-config-prettier: 8.3.0_eslint@8.1.0
+  eslint-plugin-prettier: 4.0.0_850528f9ec3c0797b9b19a94a36b5ba3
   prettier: 2.4.1
   prettier-plugin-organize-imports: 2.3.4_prettier@2.4.1+typescript@4.4.4
   regenerator-runtime: 0.13.9
@@ -1241,6 +1245,32 @@ packages:
       source-map: 0.6.1
     dev: false
 
+  /eslint-config-prettier/8.3.0_eslint@8.1.0:
+    resolution: {integrity: sha1-90cbILb+ipqSVMxoRFQgKIai3Xo=, tarball: eslint-config-prettier/download/eslint-config-prettier-8.3.0.tgz}
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+    dependencies:
+      eslint: 8.1.0
+    dev: true
+
+  /eslint-plugin-prettier/4.0.0_850528f9ec3c0797b9b19a94a36b5ba3:
+    resolution: {integrity: sha1-i5nR5LiySnYkcrRWeZICNhnLmOA=, tarball: eslint-plugin-prettier/download/eslint-plugin-prettier-4.0.0.tgz}
+    engines: {node: '>=6.0.0'}
+    peerDependencies:
+      eslint: '>=7.28.0'
+      eslint-config-prettier: '*'
+      prettier: '>=2.0.0'
+    peerDependenciesMeta:
+      eslint-config-prettier:
+        optional: true
+    dependencies:
+      eslint: 8.1.0
+      eslint-config-prettier: 8.3.0_eslint@8.1.0
+      prettier: 2.4.1
+      prettier-linter-helpers: 1.0.0
+    dev: true
+
   /eslint-scope/5.1.1:
     resolution: {integrity: sha1-54blmmbLkrP2wfsNUIqrF0hI9Iw=, tarball: eslint-scope/download/eslint-scope-5.1.1.tgz}
     engines: {node: '>=8.0.0'}
@@ -1384,6 +1414,10 @@ packages:
 
   /fast-deep-equal/3.1.3:
     resolution: {integrity: sha1-On1WtVnWy8PrUSMlJE5hmmXGxSU=, tarball: fast-deep-equal/download/fast-deep-equal-3.1.3.tgz}
+    dev: true
+
+  /fast-diff/1.2.0:
+    resolution: {integrity: sha1-c+4RmC2Gyq95WYKNUZz+kn+sXwM=, tarball: fast-diff/download/fast-diff-1.2.0.tgz}
     dev: true
 
   /fast-glob/3.2.7:
@@ -2265,6 +2299,13 @@ packages:
   /prelude-ls/1.2.1:
     resolution: {integrity: sha1-3rxkidem5rDnYRiIzsiAM30xY5Y=, tarball: prelude-ls/download/prelude-ls-1.2.1.tgz}
     engines: {node: '>= 0.8.0'}
+    dev: true
+
+  /prettier-linter-helpers/1.0.0:
+    resolution: {integrity: sha1-0j1B/hN1ZG3i0BBNNFSjAIgCz3s=, tarball: prettier-linter-helpers/download/prettier-linter-helpers-1.0.0.tgz}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      fast-diff: 1.2.0
     dev: true
 
   /prettier-plugin-organize-imports/2.3.4_prettier@2.4.1+typescript@4.4.4:
