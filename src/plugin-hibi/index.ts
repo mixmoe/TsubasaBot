@@ -1,6 +1,7 @@
 import { Context } from "koishi";
+import * as network from "./network";
 import * as pixiv from "./pixiv";
 
 export function apply(ctx: Context) {
-  ctx.plugin(pixiv);
+  ctx.plugin(network).plugin(pixiv);
 }
