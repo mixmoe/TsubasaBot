@@ -3,6 +3,7 @@ import { template } from "koishi";
 import { Canvas } from "skia-canvas";
 import { hibi } from "../network";
 import { src2segment } from "../utils";
+import { TEMPLATE_ILLUST } from "./constants";
 import { PixivIllust } from "./models";
 
 export function randomChoice<T>(array: T[]): T | undefined {
@@ -65,7 +66,7 @@ export async function buildMultiIllustMessages(
       .slice(0, limit)
       .map(
         async (illust) =>
-          template("hibi.pixiv.illust", {
+          template(TEMPLATE_ILLUST, {
             title: illust.title,
             illustId: illust.id,
             member: illust.user.name,

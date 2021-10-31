@@ -6,6 +6,7 @@ import {
   ForwardMessageBuilder,
   src2segment,
 } from "../utils";
+import * as constants from "./constants";
 import {
   PixivIllustType,
   PixivRankType,
@@ -23,31 +24,9 @@ import {
 
 const imageSendLimit = BoundedNumber({ le: 5, ge: 1 });
 
-template.set("hibi.pixiv", {
-  startPrompt: `开始获取图片信息`,
-  notFound: `没有找到相关图片`,
-  pageCount: `第{0}张`,
-  imageSent: `{{desc}}\n{{image}}`,
-  illust: `
-标题: {{title}} (ID: {{illustId}})
-作者: {{member}} (ID: {{memberId}})
-
-该作品共有 {{total}} 张图片, 将会发送前 {{send}} 张`.trim(),
-  member: `
-{{avatar}}
-作者: {{member}} (ID: {{memberId}})
-共 {{illusts}} 份插画, 共获得了 {{bookmarks}} 个收藏
-
-本页共有 {{total}} 张图片, 将会发送本页人气最高的前 {{send}} 张`.trim(),
-  search: `
-关于 {{keyword}} 的 Pixiv 搜索结果第 {{page}} 页
-
-共搜索到 {{total}} 条结果, 将会发送本页人气最高的前 {{send}} 张`.trim(),
-});
-
 function ranking(ctx: Context) {
   ctx
-    .command("hibi/pixiv.ranking", {})
+    .command(constants.COMMAND_RANKING, {})
     .alias("一图")
     .option("type", "-t <type> 排行榜类型", {
       type: EnumerateType(PixivRankType),
@@ -65,7 +44,7 @@ function ranking(ctx: Context) {
       fallback: undefined,
     })
     .action(async ({ options, session }) => {
-      await session?.send(template("hibi.pixiv.startPrompt"));
+      await session?.send(template(constants.TEMPLATE_START_PROMPT));
       const { username: name, userId: uin } = session!;
       const forward = new ForwardMessageBuilder(name, +uin!);
 
@@ -83,10 +62,10 @@ function ranking(ctx: Context) {
           options?.illustType ? type === options.illustType : true,
         ),
       );
-      if (!illust) return template("hibi.pixiv.notFound");
+      if (!illust) return template(constants.TEMPLATE_NOT_FOUND);
 
       forward.add(
-        template("hibi.pixiv.illust", {
+        template(constants.TEMPLATE_ILLUST, {
           title: illust.title,
           illustId: illust.id,
           member: illust.user.name,
@@ -106,21 +85,21 @@ function ranking(ctx: Context) {
 
 function illust(ctx: Context) {
   ctx
-    .command("hibi/pixiv.illust <id:posint>")
+    .command(`${constants.COMMAND_ILLUST} <id:posint>`)
     .alias("点图", "p站点图", "pixiv点图")
     .option("limit", "-l <size:number> 最多发送图片数量", {
       type: imageSendLimit,
       fallback: 5,
     })
     .action(async ({ options, session }, id) => {
-      await session?.send(template("hibi.pixiv.startPrompt"));
+      await session?.send(template(constants.TEMPLATE_START_PROMPT));
       const { username: name, userId: uin } = session!;
       const forward = new ForwardMessageBuilder(name, +uin!);
 
       const { illust } = await pixiv.illust({ id });
 
       forward.add(
-        template("hibi.pixiv.illust", {
+        template(constants.TEMPLATE_ILLUST, {
           title: illust.title,
           illustId: illust.id,
           member: illust.user.name,
@@ -140,7 +119,7 @@ function illust(ctx: Context) {
 
 function member(ctx: Context) {
   ctx
-    .command("hibi/pixiv.member <id:posint>")
+    .command(`${constants.COMMAND_MEMBER} <id:posint>`)
     .alias("p站用户", "p站用户信息", "画师")
     .option("limit", "-l <size:number> 最多发送图片数量", {
       type: imageSendLimit,
@@ -152,7 +131,7 @@ function member(ctx: Context) {
       fallback: undefined,
     })
     .action(async ({ options, session }, id) => {
-      await session?.send(template("hibi.pixiv.startPrompt"));
+      await session?.send(template(constants.TEMPLATE_START_PROMPT));
       const { username: name, userId: uin } = session!;
       const forward = new ForwardMessageBuilder(name, +uin!);
 
@@ -164,7 +143,7 @@ function member(ctx: Context) {
       });
 
       forward.add(
-        template("hibi.pixiv.member", {
+        template(constants.TEMPLATE_MEMBER, {
           avatar: src2segment(
             mirrorPixivImage(memberData.user.profile_image_urls.medium),
           ),
@@ -187,7 +166,7 @@ function member(ctx: Context) {
 
 function search(ctx: Context) {
   ctx
-    .command("hibi/pixiv.search <keyword:string>")
+    .command(`${constants.COMMAND_SEARCH} <keyword:string>`)
     .alias("p站搜图", "pixiv搜图")
     .option("limit", "-l <size:number> 最多发送图片数量", {
       type: imageSendLimit,
@@ -207,7 +186,7 @@ function search(ctx: Context) {
       fallback: undefined,
     })
     .action(async ({ options, session }, keyword) => {
-      await session?.send(template("hibi.pixiv.startPrompt"));
+      await session?.send(template(constants.TEMPLATE_START_PROMPT));
       const { username: name, userId: uin } = session!;
       const forward = new ForwardMessageBuilder(name, +uin!);
 
@@ -220,7 +199,7 @@ function search(ctx: Context) {
       });
 
       forward.add(
-        template("hibi.pixiv.search", {
+        template(constants.TEMPLATE_SEARCH, {
           keyword,
           page: options?.page,
           total: illusts.length,

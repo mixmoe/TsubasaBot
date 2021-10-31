@@ -17,13 +17,13 @@ export function apiCallerFactory<T, P>(
   endpoint: `pixiv/${string}`,
 ): (options: P) => Promise<T> {
   return async (options: P) => {
-    const result = await hibi.get<T | PixivError>(endpoint, {
+    const { data } = await hibi.get<T | PixivError>(endpoint, {
       params: { ...options },
     });
-    if ("error" in result.data) {
-      throw new Error(result.data.error.user_message);
+    if ("error" in data) {
+      throw new Error(data.error.user_message);
     }
-    return result.data;
+    return data;
   };
 }
 
