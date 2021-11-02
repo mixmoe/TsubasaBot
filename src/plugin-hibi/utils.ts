@@ -73,7 +73,7 @@ export class ForwardMessageBuilder {
   }
 }
 
-export const src2segment = (src: Buffer | string) =>
+export const src2image = (src: Buffer | string) =>
   segment("image", {
     file: typeof src === "string" ? src : "base64://" + src.toString("base64"),
   });

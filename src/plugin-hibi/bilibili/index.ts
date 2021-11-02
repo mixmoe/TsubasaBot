@@ -4,7 +4,7 @@ import * as dayjsDuration from "dayjs/plugin/duration";
 import * as dayjsLocalizedFormat from "dayjs/plugin/localizedFormat";
 import * as dayjsRelativeTime from "dayjs/plugin/relativeTime";
 import { Context, segment, template } from "koishi";
-import { ForwardMessageBuilder, src2segment } from "../utils";
+import { ForwardMessageBuilder, src2image } from "../utils";
 import * as constants from "./constants";
 import * as bilibili from "./network";
 import { matchVideoId } from "./utils";
@@ -35,7 +35,7 @@ function video(ctx: Context) {
       const response = await bilibili.video({ aid }),
         forward = new ForwardMessageBuilder(name, +uin!);
 
-      forward.add(src2segment(response.pic));
+      forward.add(src2image(response.pic));
       forward.add(
         template(constants.TEMPLATE_VIDEO, {
           title: response.title,

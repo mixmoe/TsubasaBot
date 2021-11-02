@@ -4,7 +4,7 @@ import {
   BoundedNumber,
   EnumerateType,
   ForwardMessageBuilder,
-  src2segment,
+  src2image,
 } from "../utils";
 import * as constants from "./constants";
 import {
@@ -144,7 +144,7 @@ function member(ctx: Context) {
 
       forward.add(
         template(constants.TEMPLATE_MEMBER, {
-          avatar: src2segment(
+          avatar: src2image(
             mirrorPixivImage(memberData.user.profile_image_urls.medium),
           ),
           member: memberData.user.name,
