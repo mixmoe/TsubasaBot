@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import * as dayjs from "dayjs";
 import { Context, template } from "koishi";
 import {
   BoundedNumber,
