@@ -79,7 +79,7 @@ function ranking(ctx: Context) {
         ...(await buildSingleIllustMessages(illust, options?.limit!)),
       );
 
-      await forward.send(session!);
+      await forward.send();
     });
 }
 
@@ -113,7 +113,7 @@ function illust(ctx: Context) {
         ...(await buildSingleIllustMessages(illust, options?.limit!)),
       );
 
-      await forward.send(session!);
+      await forward.send();
     });
 }
 
@@ -160,7 +160,7 @@ function member(ctx: Context) {
         ...(await buildMultiIllustMessages(illusts, options?.limit!)),
       );
 
-      await forward.send(session!);
+      await forward.send();
     });
 }
 
@@ -211,7 +211,7 @@ function search(ctx: Context) {
         ...(await buildMultiIllustMessages(illusts, options?.limit!)),
       );
 
-      await forward.send(session!);
+      await forward.send();
     });
 }
 

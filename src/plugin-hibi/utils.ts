@@ -1,4 +1,20 @@
+import { AsyncLocalStorage } from "async_hooks";
 import { segment, Session } from "koishi";
+
+export const storage = new AsyncLocalStorage<EventLocal>();
+
+export class EventLocal extends Map<string, any> {
+  readonly SESSION_KEY = "session" as const;
+
+  constructor(session: Session) {
+    super();
+    this.set(this.SESSION_KEY, session);
+  }
+
+  get session(): Session {
+    return this.get(this.SESSION_KEY) as Session;
+  }
+}
 
 export function EnumerateType<T>(enumerate: T): (source: string) => keyof T {
   const keys = Object.keys(enumerate).filter(
@@ -64,11 +80,13 @@ export class ForwardMessageBuilder {
     return ForwardMessageBuilder.create(this.name, this.uin, ...this.messages);
   }
 
-  public async send(session: Session) {
+  public async send(session?: Session) {
+    session = session ?? storage.getStore()?.session;
+    if (!session) throw new Error("session not found");
     if (session.onebot && session.guildId) {
       await session.onebot.sendGroupForwardMsg(+session.guildId, this.build());
     } else {
-      await Promise.all(this.messages.map((msg) => session.send(msg)));
+      await Promise.all(this.messages.map((msg) => session?.send(msg)));
     }
   }
 }
