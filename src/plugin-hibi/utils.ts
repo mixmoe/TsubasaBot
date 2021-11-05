@@ -1,8 +1,19 @@
 import { AsyncLocalStorage } from "async_hooks";
+import * as dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+import * as dayjsDuration from "dayjs/plugin/duration";
+import * as dayjsLocalizedFormat from "dayjs/plugin/localizedFormat";
+import * as dayjsRelativeTime from "dayjs/plugin/relativeTime";
 import { segment, Session } from "koishi";
 
-export const storage = new AsyncLocalStorage<EventLocal>();
+dayjs.extend(dayjsDuration);
+dayjs.extend(dayjsRelativeTime);
+dayjs.extend(dayjsLocalizedFormat);
+dayjs.locale("zh-cn");
 
+export { dayjs as datetime };
+
+export const storage = new AsyncLocalStorage<EventLocal>();
 export class EventLocal extends Map<string, any> {
   readonly SESSION_KEY = "session" as const;
 
@@ -95,3 +106,6 @@ export const src2image = (src: Buffer | string) =>
   segment("image", {
     file: typeof src === "string" ? src : "base64://" + src.toString("base64"),
   });
+
+export const stamp2time = (stamp: number): string =>
+  dayjs(stamp).format("llll");

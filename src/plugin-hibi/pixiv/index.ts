@@ -1,7 +1,7 @@
-import * as dayjs from "dayjs";
 import { Context, template } from "koishi";
 import {
   BoundedNumber,
+  datetime,
   EnumerateType,
   ForwardMessageBuilder,
   src2image,
@@ -48,8 +48,8 @@ function ranking(ctx: Context) {
       const { username: name, userId: uin } = session!;
       const forward = new ForwardMessageBuilder(name, +uin!);
 
-      const inputDate = dayjs(options?.date),
-        maximumDate = dayjs().subtract(2, "day");
+      const inputDate = datetime(options?.date),
+        maximumDate = datetime().subtract(2, "day");
       const response = await pixiv.rank({
         mode: options?.type,
         date: (inputDate.isValid() && inputDate.isBefore(maximumDate)

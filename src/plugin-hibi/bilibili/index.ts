@@ -1,18 +1,13 @@
-import * as dayjs from "dayjs";
-import "dayjs/locale/zh-cn";
-import * as dayjsDuration from "dayjs/plugin/duration";
-import * as dayjsLocalizedFormat from "dayjs/plugin/localizedFormat";
-import * as dayjsRelativeTime from "dayjs/plugin/relativeTime";
 import { Context, segment, template } from "koishi";
-import { ForwardMessageBuilder, src2image } from "../utils";
+import {
+  datetime,
+  ForwardMessageBuilder,
+  src2image,
+  stamp2time,
+} from "../utils";
 import * as constants from "./constants";
 import * as bilibili from "./network";
 import { matchVideoId } from "./utils";
-
-dayjs.extend(dayjsDuration);
-dayjs.extend(dayjsRelativeTime);
-dayjs.extend(dayjsLocalizedFormat);
-dayjs.locale("zh-cn");
 
 function video(ctx: Context) {
   ctx.middleware(async (session, next) => {
@@ -41,11 +36,11 @@ function video(ctx: Context) {
           title: response.title,
           uploader: response.owner.name,
           uploaderId: response.owner.mid,
-          duration: dayjs.duration(response.duration * 1000).humanize(),
-          relativeDuration: dayjs
-            .duration(dayjs(response.pubdate * 1000).diff())
+          duration: datetime.duration(response.duration * 1000).humanize(),
+          relativeDuration: datetime
+            .duration(datetime(response.pubdate * 1000).diff())
             .humanize(true),
-          published: dayjs(response.pubdate * 1000).format("llll"),
+          published: stamp2time(response.pubdate * 1000),
           bvid: response.bvid,
           aid: response.aid,
           view: response.stat.view,
