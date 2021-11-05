@@ -41,3 +41,21 @@ export interface NeteaseSongDownload {
 export interface NeteaseSongResponse extends NeteaseBaseResponse {
   data: NeteaseSongDownload[];
 }
+
+export interface NeteaseLyricResponse extends NeteaseBaseResponse {
+  sgc: boolean;
+  sfy: boolean;
+  qfy: boolean;
+  lyricUser?: {
+    id: number;
+    nickname: string;
+    demand: number;
+    status: number;
+    userid: number;
+    uptime: number;
+  };
+  transUser?: NeteaseLyricResponse["lyricUser"];
+  lrc: { version: string; lyric: string } | { version: 0; lyric: "" };
+  klyric: NeteaseLyricResponse["lrc"];
+  tlyric: NeteaseLyricResponse["lrc"];
+}

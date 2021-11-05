@@ -1,7 +1,8 @@
 import { Context, template } from "koishi";
+import { ForwardMessageBuilder } from "../utils";
 import * as constants from "./constants";
 import * as netease from "./network";
-import { music2seg } from "./utils";
+import { music2seg, sliceLyric } from "./utils";
 
 function search(ctx: Context) {
   ctx
@@ -60,6 +61,48 @@ function search(ctx: Context) {
     });
 }
 
+function lyric(ctx: Context) {
+  ctx
+    .command(`${constants.COMMAND_LYRIC} <id:number>`)
+    .option("entire", "-e 将歌词整体发送, 便于复制")
+    .alias("网易云歌词", "歌词")
+    .action(async ({ options, session }, id) => {
+      await session?.send(template(constants.TEMPLATE_START_PROMPT));
+      const { username: name, userId: uin } = session!;
+
+      const result = await netease.lyric({ id }),
+        forward = new ForwardMessageBuilder(name, +uin!);
+
+      forward.add(template(constants.TEMPLATE_LYRIC_RESULT, { id }));
+
+      if (result.lrc.version > 0) {
+        const { lyric } = result.lrc;
+        forward.add(
+          template(constants.TEMPLATE_LYRIC_SOURCE, {
+            type: "原",
+            uploaderName: result.lyricUser?.nickname,
+          }),
+        );
+        if (options?.entire) forward.add(lyric);
+        else forward.add(...sliceLyric(lyric));
+      }
+
+      if (result.tlyric.version > 0) {
+        const { lyric } = result.tlyric;
+        forward.add(
+          template(constants.TEMPLATE_LYRIC_SOURCE, {
+            type: "翻译",
+            uploaderName: result.transUser?.nickname,
+          }),
+        );
+        if (options?.entire) forward.add(lyric);
+        else forward.add(...sliceLyric(lyric));
+      }
+
+      await forward.send();
+    });
+}
+
 export function apply(ctx: Context) {
-  ctx.plugin(search);
+  ctx.plugin(search).plugin(lyric);
 }

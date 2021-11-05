@@ -2,6 +2,7 @@ import { hibi } from "../network";
 import {
   NeteaseBaseResponse,
   NeteaseDetailResponse,
+  NeteaseLyricResponse,
   NeteaseSearchResponse,
   NeteaseSongResponse,
 } from "./models";
@@ -45,3 +46,10 @@ export type NeteaseSongOptions = { id: number; br: number };
 export const song = apiCallerFactory<NeteaseSongResponse, NeteaseSongOptions>(
   "netease/song",
 );
+
+export type NeteaseLyricOptions = { id: number };
+
+export const lyric = apiCallerFactory<
+  NeteaseLyricResponse,
+  NeteaseLyricOptions
+>("netease/lyric");
