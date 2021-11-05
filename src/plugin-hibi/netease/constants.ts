@@ -39,8 +39,35 @@ export const TEMPLATE_LYRIC_SOURCE = `${TEMPLATE_ROOT}.lyric-source` as const;
 
 template.set(TEMPLATE_LYRIC_SOURCE, "{{type}}歌词 提供者: {{uploaderName}}");
 
+export const TEMPLATE_SONG_DETAIL = `${TEMPLATE_ROOT}.song-detail` as const;
+
+template.set(
+  TEMPLATE_SONG_DETAIL,
+  `
+歌曲名: {{name}} (ID:{{id}})
+别名: {{aliases}}
+歌手: {{artist}}  专辑: {{album}}
+发布时间: {{publish}}
+`.trim(),
+);
+
+export const TEMPLATE_SONG_DOWNLOAD = `${TEMPLATE_ROOT}.song-download` as const;
+
+template.set(
+  TEMPLATE_SONG_DOWNLOAD,
+  `
+歌曲比特率: {{bitrate}}
+大小: {{size}}
+MD5: {{md5}}
+
+下载链接: {{url}} (将在{{expire}}秒后过期)
+`.trim(),
+);
+
 export const COMMAND_ROOT = "hibi/netease";
 
 export const COMMAND_SEARCH = `${COMMAND_ROOT}.search` as const;
 
 export const COMMAND_LYRIC = `${COMMAND_ROOT}.lyric` as const;
+
+export const COMMAND_SONG = `${COMMAND_ROOT}.song` as const;

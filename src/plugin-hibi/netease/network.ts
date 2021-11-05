@@ -41,7 +41,7 @@ export const detail = apiCallerFactory<
   NeteaseDetailOptions
 >("netease/detail");
 
-export type NeteaseSongOptions = { id: number; br: number };
+export type NeteaseSongOptions = { id: number; br?: number };
 
 export const song = apiCallerFactory<NeteaseSongResponse, NeteaseSongOptions>(
   "netease/song",

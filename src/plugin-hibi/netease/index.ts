@@ -1,5 +1,5 @@
-import { Context, template } from "koishi";
-import { ForwardMessageBuilder } from "../utils";
+import { Context, segment, template } from "koishi";
+import { ForwardMessageBuilder, src2image, stamp2time } from "../utils";
 import * as constants from "./constants";
 import * as netease from "./network";
 import { music2seg, sliceLyric } from "./utils";
@@ -32,7 +32,17 @@ function search(ctx: Context) {
 
       if (!first) return template(constants.TEMPLATE_NOT_FOUND);
 
-      if (options.first) return music2seg(first.id);
+      if (options.first) {
+        await session?.send(
+          template(constants.TEMPLATE_SEARCH_REPEAT, {
+            id: first.id,
+            name: first.name,
+            artist: first.ar.map(({ name }) => name).join("/"),
+            index: 0,
+          }),
+        );
+        return music2seg(first.id);
+      }
 
       let message = template(constants.TEMPLATE_SEARCH_PREFIX, {
         total: songCount,
@@ -103,6 +113,63 @@ function lyric(ctx: Context) {
     });
 }
 
+function song(ctx: Context) {
+  ctx
+    .command(`${constants.COMMAND_SONG} <id:number>`, { checkArgCount: true })
+    .alias("网易云歌曲", "歌曲直链")
+    .option("bitrate", "-b <bitrate> 歌曲比特率", {
+      type: ["64000", "128000", "192000", "320000"],
+    })
+    .option("preview", "-p 将歌曲转换为语音消息(稍慢)")
+    .action(async ({ options, session }, id) => {
+      await session?.send(template(constants.TEMPLATE_START_PROMPT));
+      const { username: name, userId: uin } = session!;
+
+      const {
+          songs: [song],
+        } = await netease.detail({ id }),
+        {
+          data: [download],
+        } = await netease.song({
+          id,
+          br: options?.bitrate ? +options.bitrate : undefined,
+        }),
+        forward = new ForwardMessageBuilder(name, +uin!);
+
+      forward.add(src2image(song.al.picUrl));
+
+      forward.add(
+        template(constants.TEMPLATE_SONG_DETAIL, {
+          name: song.name,
+          id: song.id,
+          aliases: song.alia.join(", "),
+          artist: song.ar.map((a) => a.name).join("/"),
+          album: song.al.name,
+          publish: song.publishTime ? stamp2time(song.publishTime) : "未知",
+        }),
+      );
+
+      forward.add(
+        template(constants.TEMPLATE_SONG_DOWNLOAD, {
+          bitrate: `${download.br / 1000}K`,
+          size: `${(download.size / 1024 ** 2).toFixed(3)}MB`,
+          md5: download.md5,
+          url: download.url,
+          expire: download.expi,
+        }),
+      );
+
+      if (options?.preview) {
+        const {
+          data: [{ url: file }],
+        } = await netease.song({ id });
+        await session?.send(segment("record", { file }));
+      }
+
+      await forward.send();
+    });
+}
+
 export function apply(ctx: Context) {
-  ctx.plugin(search).plugin(lyric);
+  ctx.plugin(search).plugin(lyric).plugin(song);
 }
