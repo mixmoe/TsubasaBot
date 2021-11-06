@@ -6,12 +6,6 @@ import { src2image } from "../utils";
 import { TEMPLATE_ILLUST } from "./constants";
 import { PixivIllust } from "./models";
 
-export function randomChoice<T>(array: T[]): T | undefined {
-  return array.length > 0
-    ? array[Math.floor(Math.random() * array.length)]
-    : undefined;
-}
-
 export function isR18(tags: PixivIllust["tags"]) {
   return tags.some(({ name }) => name.toLowerCase().startsWith("r-18"));
 }

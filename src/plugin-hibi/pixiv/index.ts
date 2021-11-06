@@ -1,4 +1,5 @@
 import { Context, template } from "koishi";
+import * as _ from "lodash";
 import {
   BoundedNumber,
   datetime,
@@ -19,7 +20,6 @@ import {
   buildMultiIllustMessages,
   buildSingleIllustMessages,
   mirrorPixivImage,
-  randomChoice,
 } from "./utils";
 
 const imageSendLimit = BoundedNumber({ le: 5, ge: 1 });
@@ -57,7 +57,7 @@ function ranking(ctx: Context) {
           : maximumDate
         ).format("YYYY-MM-DD"),
       });
-      const illust = randomChoice(
+      const illust = _.sample(
         response.illusts.filter(({ type }) =>
           options?.illustType ? type === options.illustType : true,
         ),
