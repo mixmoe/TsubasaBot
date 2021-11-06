@@ -25,9 +25,11 @@
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
     "koishi": "^4.0.0-alpha.12",
+    "lodash": "^4.17.21",
     "skia-canvas": "^0.9.26"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.176",
     "@types/node": "^16.11.6",
     "@types/skia-canvas": "^0.9.2",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
