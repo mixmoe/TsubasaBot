@@ -25,6 +25,7 @@
     "cheerio": "^1.0.0-rc.10",
     "dayjs": "^1.10.7",
     "dotenv": "^10.0.0",
+    "form-data": "^4.0.0",
     "koishi": "^4.0.0-alpha.12",
     "lodash": "^4.17.21",
     "skia-canvas": "^0.9.26"

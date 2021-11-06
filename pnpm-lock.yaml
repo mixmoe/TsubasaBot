@@ -24,7 +24,6 @@ specifiers:
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
   form-data: ^4.0.0
-  formdata-node: ^4.3.1
   koishi: ^4.0.0-alpha.12
   lodash: ^4.17.21
   nodemon: ^2.0.14
@@ -51,7 +50,6 @@ dependencies:
   dayjs: 1.10.7
   dotenv: 10.0.0
   form-data: 4.0.0
-  formdata-node: 4.3.1
   koishi: 4.0.0-alpha.12
   lodash: 4.17.21
   skia-canvas: 0.9.26
@@ -1582,14 +1580,6 @@ packages:
       mime-types: 2.1.33
     dev: false
 
-  /formdata-node/4.3.1:
-    resolution: {integrity: sha1-57eKKlH1JMzEg7TSI8iWkP0iBh0=, tarball: formdata-node/download/formdata-node-4.3.1.tgz}
-    engines: {node: '>= 12.20'}
-    dependencies:
-      node-domexception: 1.0.0
-      web-streams-polyfill: 4.0.0-beta.1
-    dev: false
-
   /fresh/0.5.2:
     resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=, tarball: fresh/download/fresh-0.5.2.tgz}
     engines: {node: '>= 0.6'}
@@ -2354,11 +2344,6 @@ packages:
       semver: 5.7.1
     dev: false
 
-  /node-domexception/1.0.0:
-    resolution: {integrity: sha1-aIjbRqH3HAt2s/dVUBa2P+ZHZuU=, tarball: node-domexception/download/node-domexception-1.0.0.tgz}
-    engines: {node: '>=10.5.0'}
-    dev: false
-
   /node-fetch/2.6.5:
     resolution: {integrity: sha1-QnNVN9fwgKfl94tsVJtxRr4XQv0=, tarball: node-fetch/download/node-fetch-2.6.5.tgz?cache=0&sync_timestamp=1634048814924&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fnode-fetch%2Fdownload%2Fnode-fetch-2.6.5.tgz}
     engines: {node: 4.x || >=6.0.0}
@@ -2959,7 +2944,7 @@ packages:
     dev: false
 
   /source-map/0.6.1:
-    resolution: {integrity: sha1-dHIq8y6WFOnCh6jQu95IteLxomM=, tarball: source-map/download/source-map-0.6.1.tgz}
+    resolution: {integrity: sha1-dHIq8y6WFOnCh6jQu95IteLxomM=, tarball: source-map/download/source-map-0.6.1.tgz?cache=0&sync_timestamp=1632822727980&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsource-map%2Fdownload%2Fsource-map-0.6.1.tgz}
     engines: {node: '>=0.10.0'}
     requiresBuild: true
     dev: false
@@ -3326,11 +3311,6 @@ packages:
     resolution: {integrity: sha1-UogESGC0u6zkQxAfzTvdsqCqJJY=, tarball: vm2/download/vm2-3.9.5.tgz}
     engines: {node: '>=6.0'}
     hasBin: true
-    dev: false
-
-  /web-streams-polyfill/4.0.0-beta.1:
-    resolution: {integrity: sha1-Oxm5gXN0t87gbTdLp+6zrrgOjJU=, tarball: web-streams-polyfill/download/web-streams-polyfill-4.0.0-beta.1.tgz}
-    engines: {node: '>= 12'}
     dev: false
 
   /webidl-conversions/3.0.1:
