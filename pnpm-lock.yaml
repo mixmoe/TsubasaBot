@@ -17,11 +17,14 @@ specifiers:
   '@typescript-eslint/parser': ^5.2.0
   axios: ^0.23.0
   axios-logger: ^2.5.0
+  cheerio: ^1.0.0-rc.10
   dayjs: ^1.10.7
   dotenv: ^10.0.0
   eslint: ^8.1.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
+  form-data: ^4.0.0
+  formdata-node: ^4.3.1
   koishi: ^4.0.0-alpha.12
   lodash: ^4.17.21
   nodemon: ^2.0.14
@@ -44,8 +47,11 @@ dependencies:
   '@koishijs/utils': 5.0.0-alpha.7
   axios: 0.23.0
   axios-logger: 2.5.0
+  cheerio: 1.0.0-rc.10
   dayjs: 1.10.7
   dotenv: 10.0.0
+  form-data: 4.0.0
+  formdata-node: 4.3.1
   koishi: 4.0.0-alpha.12
   lodash: 4.17.21
   skia-canvas: 0.9.26
@@ -750,6 +756,10 @@ packages:
       tslib: 2.3.1
     dev: false
 
+  /asynckit/0.4.0:
+    resolution: {integrity: sha1-x57Zf380y48robyXkLzDZkdLS3k=, tarball: asynckit/download/asynckit-0.4.0.tgz}
+    dev: false
+
   /axios-logger/2.5.0:
     resolution: {integrity: sha1-Tl01QkGmk5gt2wroDTPqTWov+i0=, tarball: axios-logger/download/axios-logger-2.5.0.tgz}
     dependencies:
@@ -814,6 +824,10 @@ packages:
       buffer: 5.7.1
       inherits: 2.0.4
       readable-stream: 3.6.0
+    dev: false
+
+  /boolbase/1.0.0:
+    resolution: {integrity: sha1-aN/1++YMUes3cl6p4+0xDcwed24=, tarball: boolbase/download/boolbase-1.0.0.tgz}
     dev: false
 
   /boxen/5.1.2:
@@ -904,6 +918,29 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
 
+  /cheerio-select/1.5.0:
+    resolution: {integrity: sha1-+vPa6zGxfF4anavO4oiq+Kr6WCM=, tarball: cheerio-select/download/cheerio-select-1.5.0.tgz}
+    dependencies:
+      css-select: 4.1.3
+      css-what: 5.1.0
+      domelementtype: 2.2.0
+      domhandler: 4.2.2
+      domutils: 2.8.0
+    dev: false
+
+  /cheerio/1.0.0-rc.10:
+    resolution: {integrity: sha1-K6Pc38wm55VvwfRA5h1RxkM3nz4=, tarball: cheerio/download/cheerio-1.0.0-rc.10.tgz}
+    engines: {node: '>= 6'}
+    dependencies:
+      cheerio-select: 1.5.0
+      dom-serializer: 1.3.2
+      domhandler: 4.2.2
+      htmlparser2: 6.1.0
+      parse5: 6.0.1
+      parse5-htmlparser2-tree-adapter: 6.0.1
+      tslib: 2.3.1
+    dev: false
+
   /chokidar/3.5.2:
     resolution: {integrity: sha1-26OXb8rbAW9m/TZQIdkWANAcHnU=, tarball: chokidar/download/chokidar-3.5.2.tgz}
     engines: {node: '>= 8.10.0'}
@@ -975,6 +1012,13 @@ packages:
     hasBin: true
     dev: false
 
+  /combined-stream/1.0.8:
+    resolution: {integrity: sha1-w9RaizT9cwYxoRCoolIGgrMdWn8=, tarball: combined-stream/download/combined-stream-1.0.8.tgz}
+    engines: {node: '>= 0.8'}
+    dependencies:
+      delayed-stream: 1.0.0
+    dev: false
+
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=, tarball: concat-map/download/concat-map-0.0.1.tgz}
 
@@ -1038,6 +1082,21 @@ packages:
     resolution: {integrity: sha1-7yp6lm7BEIM4g2m6oC6+rSKbMNU=, tarball: crypto-random-string/download/crypto-random-string-2.0.0.tgz}
     engines: {node: '>=8'}
     dev: true
+
+  /css-select/4.1.3:
+    resolution: {integrity: sha1-pwRA9wMX8maRGK10/xBeZYSccGc=, tarball: css-select/download/css-select-4.1.3.tgz}
+    dependencies:
+      boolbase: 1.0.0
+      css-what: 5.1.0
+      domhandler: 4.2.2
+      domutils: 2.8.0
+      nth-check: 2.0.1
+    dev: false
+
+  /css-what/5.1.0:
+    resolution: {integrity: sha1-P3tweq32M7r2LCzrhXm1RbtA9/4=, tarball: css-what/download/css-what-5.1.0.tgz}
+    engines: {node: '>= 6'}
+    dev: false
 
   /data-uri-to-buffer/3.0.1:
     resolution: {integrity: sha1-WUuJc5OMW8LDMEZTV4U0GrxPNjY=, tarball: data-uri-to-buffer/download/data-uri-to-buffer-3.0.1.tgz}
@@ -1120,6 +1179,11 @@ packages:
       vm2: 3.9.5
     dev: false
 
+  /delayed-stream/1.0.0:
+    resolution: {integrity: sha1-3zrhmayt+31ECqrgsp4icrJOxhk=, tarball: delayed-stream/download/delayed-stream-1.0.0.tgz}
+    engines: {node: '>=0.4.0'}
+    dev: false
+
   /delegates/1.0.0:
     resolution: {integrity: sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o=, tarball: delegates/download/delegates-1.0.0.tgz}
     dev: false
@@ -1163,6 +1227,33 @@ packages:
       esutils: 2.0.3
     dev: true
 
+  /dom-serializer/1.3.2:
+    resolution: {integrity: sha1-YgZDfTLO767HFhgDIwx6ILwbTZE=, tarball: dom-serializer/download/dom-serializer-1.3.2.tgz}
+    dependencies:
+      domelementtype: 2.2.0
+      domhandler: 4.2.2
+      entities: 2.2.0
+    dev: false
+
+  /domelementtype/2.2.0:
+    resolution: {integrity: sha1-mgtsJ4LtahxzI9QiZxg9+b2LHVc=, tarball: domelementtype/download/domelementtype-2.2.0.tgz}
+    dev: false
+
+  /domhandler/4.2.2:
+    resolution: {integrity: sha1-6CXXIdGahrjCAaNSZOImxnjudV8=, tarball: domhandler/download/domhandler-4.2.2.tgz}
+    engines: {node: '>= 4'}
+    dependencies:
+      domelementtype: 2.2.0
+    dev: false
+
+  /domutils/2.8.0:
+    resolution: {integrity: sha1-RDfe9dtuLR9dbuhZvZXKfQIEgTU=, tarball: domutils/download/domutils-2.8.0.tgz}
+    dependencies:
+      dom-serializer: 1.3.2
+      domelementtype: 2.2.0
+      domhandler: 4.2.2
+    dev: false
+
   /dot-prop/5.3.0:
     resolution: {integrity: sha1-kMzOcIzZzYLMTcjD3dmr3VWyDog=, tarball: dot-prop/download/dot-prop-5.3.0.tgz?cache=0&sync_timestamp=1634019712786&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fdot-prop%2Fdownload%2Fdot-prop-5.3.0.tgz}
     engines: {node: '>=8'}
@@ -1203,6 +1294,10 @@ packages:
     dependencies:
       ansi-colors: 4.1.1
     dev: true
+
+  /entities/2.2.0:
+    resolution: {integrity: sha1-CY3JDruD2N/6CJ1VJWs1HTTE2lU=, tarball: entities/download/entities-2.2.0.tgz}
+    dev: false
 
   /escape-goat/2.1.1:
     resolution: {integrity: sha1-Gy3HcANnbEV+x2Cy3GjttkgYhnU=, tarball: escape-goat/download/escape-goat-2.1.1.tgz}
@@ -1478,6 +1573,23 @@ packages:
         optional: true
     dev: false
 
+  /form-data/4.0.0:
+    resolution: {integrity: sha1-k5Gdrq82HuUpWEubMWZNwSyfpFI=, tarball: form-data/download/form-data-4.0.0.tgz}
+    engines: {node: '>= 6'}
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      mime-types: 2.1.33
+    dev: false
+
+  /formdata-node/4.3.1:
+    resolution: {integrity: sha1-57eKKlH1JMzEg7TSI8iWkP0iBh0=, tarball: formdata-node/download/formdata-node-4.3.1.tgz}
+    engines: {node: '>= 12.20'}
+    dependencies:
+      node-domexception: 1.0.0
+      web-streams-polyfill: 4.0.0-beta.1
+    dev: false
+
   /fresh/0.5.2:
     resolution: {integrity: sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=, tarball: fresh/download/fresh-0.5.2.tgz}
     engines: {node: '>= 0.6'}
@@ -1700,6 +1812,15 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
+    dev: false
+
+  /htmlparser2/6.1.0:
+    resolution: {integrity: sha1-xNditsM3GgXb5l6UrkOp+EX7j7c=, tarball: htmlparser2/download/htmlparser2-6.1.0.tgz}
+    dependencies:
+      domelementtype: 2.2.0
+      domhandler: 4.2.2
+      domutils: 2.8.0
+      entities: 2.2.0
     dev: false
 
   /http-assert/1.5.0:
@@ -2233,6 +2354,11 @@ packages:
       semver: 5.7.1
     dev: false
 
+  /node-domexception/1.0.0:
+    resolution: {integrity: sha1-aIjbRqH3HAt2s/dVUBa2P+ZHZuU=, tarball: node-domexception/download/node-domexception-1.0.0.tgz}
+    engines: {node: '>=10.5.0'}
+    dev: false
+
   /node-fetch/2.6.5:
     resolution: {integrity: sha1-QnNVN9fwgKfl94tsVJtxRr4XQv0=, tarball: node-fetch/download/node-fetch-2.6.5.tgz?cache=0&sync_timestamp=1634048814924&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fnode-fetch%2Fdownload%2Fnode-fetch-2.6.5.tgz}
     engines: {node: 4.x || >=6.0.0}
@@ -2298,6 +2424,12 @@ packages:
       console-control-strings: 1.1.0
       gauge: 3.0.1
       set-blocking: 2.0.0
+    dev: false
+
+  /nth-check/2.0.1:
+    resolution: {integrity: sha1-Lv4WL1w9oGoolZ+9PbddvuqfD8I=, tarball: nth-check/download/nth-check-2.0.1.tgz}
+    dependencies:
+      boolbase: 1.0.0
     dev: false
 
   /number-is-nan/1.0.1:
@@ -2413,6 +2545,16 @@ packages:
 
   /parenthesis/3.1.7:
     resolution: {integrity: sha1-AcibYDoqaiYuxHVU507RVKm+KqY=, tarball: parenthesis/download/parenthesis-3.1.7.tgz}
+    dev: false
+
+  /parse5-htmlparser2-tree-adapter/6.0.1:
+    resolution: {integrity: sha1-LN+a2CMyEUA3DU2/XT6Sx8jdxuY=, tarball: parse5-htmlparser2-tree-adapter/download/parse5-htmlparser2-tree-adapter-6.0.1.tgz}
+    dependencies:
+      parse5: 6.0.1
+    dev: false
+
+  /parse5/6.0.1:
+    resolution: {integrity: sha1-4aHAhcVps9wIMhGE8Zo5zCf3wws=, tarball: parse5/download/parse5-6.0.1.tgz}
     dev: false
 
   /parseurl/1.3.3:
@@ -2817,7 +2959,7 @@ packages:
     dev: false
 
   /source-map/0.6.1:
-    resolution: {integrity: sha1-dHIq8y6WFOnCh6jQu95IteLxomM=, tarball: source-map/download/source-map-0.6.1.tgz?cache=0&sync_timestamp=1632822727980&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsource-map%2Fdownload%2Fsource-map-0.6.1.tgz}
+    resolution: {integrity: sha1-dHIq8y6WFOnCh6jQu95IteLxomM=, tarball: source-map/download/source-map-0.6.1.tgz}
     engines: {node: '>=0.10.0'}
     requiresBuild: true
     dev: false
@@ -3184,6 +3326,11 @@ packages:
     resolution: {integrity: sha1-UogESGC0u6zkQxAfzTvdsqCqJJY=, tarball: vm2/download/vm2-3.9.5.tgz}
     engines: {node: '>=6.0'}
     hasBin: true
+    dev: false
+
+  /web-streams-polyfill/4.0.0-beta.1:
+    resolution: {integrity: sha1-Oxm5gXN0t87gbTdLp+6zrrgOjJU=, tarball: web-streams-polyfill/download/web-streams-polyfill-4.0.0-beta.1.tgz}
+    engines: {node: '>= 12'}
     dev: false
 
   /webidl-conversions/3.0.1:
