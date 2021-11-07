@@ -1,17 +1,21 @@
 import { interpolate, template } from "@koishijs/utils";
 import * as mustache from "mustache";
 
-export type TemplateParam = { useMustache?: boolean } & Record<string, any>;
+export type TemplateParam = { $mustache?: boolean; [key: string]: any };
 
-template.format = (source: string, ...params: any[]): string => {
+export function format(source: string): string;
+export function format(source: string, params: TemplateParam): string;
+export function format(source: string, ...params): string {
   const [context] = params;
-  if (context && typeof context === "object") {
-    if ((context as TemplateParam).useMustache)
-      source = mustache.render(source, context);
-    else source = interpolate(source, context);
-  }
+
+  if (context && typeof context === "object")
+    source = (context as TemplateParam).$mustache
+      ? mustache.render(source, context)
+      : interpolate(source, context);
+
   let result = "",
     cap: RegExpExecArray | null;
+
   while ((cap = /\{(\w+)\}/.exec(source))) {
     const [matched, captured] = cap;
     result +=
@@ -19,7 +23,9 @@ template.format = (source: string, ...params: any[]): string => {
     source = source.slice(cap.index + matched.length);
   }
   return result + source;
-};
+}
+
+Object.defineProperty(template, "format", { get: () => format });
 
 declare module "koishi" {
   function template(path: string | string[]): string;
