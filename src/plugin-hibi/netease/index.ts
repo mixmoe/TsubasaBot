@@ -1,5 +1,5 @@
 import { Context, segment, template } from "koishi";
-import { ForwardMessageBuilder, src2image, stamp2time } from "../utils";
+import { ForwardMessageBuilder, stamp2time } from "../utils";
 import * as constants from "./constants";
 import * as netease from "./network";
 import { music2seg, sliceLyric } from "./utils";
@@ -136,7 +136,7 @@ function song(ctx: Context) {
         }),
         forward = new ForwardMessageBuilder(name, +uin!);
 
-      forward.add(src2image(song.al.picUrl));
+      forward.add(segment.image(song.al.picUrl));
 
       forward.add(
         template(constants.TEMPLATE_SONG_DETAIL, {

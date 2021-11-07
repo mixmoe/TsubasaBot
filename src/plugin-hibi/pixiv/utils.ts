@@ -1,8 +1,7 @@
 import { getImageData, imageFromBuffer } from "@canvas/image";
-import { template } from "koishi";
+import { segment, template } from "koishi";
 import { Canvas } from "skia-canvas";
 import { hibi } from "../network";
-import { src2image } from "../utils";
 import { TEMPLATE_ILLUST } from "./constants";
 import { PixivIllust } from "./models";
 
@@ -68,7 +67,7 @@ export async function buildMultiIllustMessages(
             total: illust.page_count,
             send: 1,
           }) +
-          src2image(
+          segment.image(
             await imageAntiCensor(
               mirrorPixivImage(illust.image_urls.large),
               isR18(illust.tags),
@@ -91,5 +90,5 @@ export async function buildSingleIllustMessages(
       .slice(0, limit)
       .map((url) => imageAntiCensor(mirrorPixivImage(url), r18)),
   );
-  return buffers.map((buffer) => src2image(buffer));
+  return buffers.map((buffer) => segment.image(buffer));
 }

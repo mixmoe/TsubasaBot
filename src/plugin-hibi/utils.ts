@@ -4,7 +4,7 @@ import "dayjs/locale/zh-cn";
 import * as dayjsDuration from "dayjs/plugin/duration";
 import * as dayjsLocalizedFormat from "dayjs/plugin/localizedFormat";
 import * as dayjsRelativeTime from "dayjs/plugin/relativeTime";
-import { segment, Session } from "koishi";
+import { Session } from "koishi";
 
 dayjs.extend(dayjsDuration);
 dayjs.extend(dayjsRelativeTime);
@@ -101,11 +101,6 @@ export class ForwardMessageBuilder {
     }
   }
 }
-
-export const src2image = (src: Buffer | string) =>
-  segment("image", {
-    file: typeof src === "string" ? src : "base64://" + src.toString("base64"),
-  });
 
 export const stamp2time = (stamp: number): string =>
   dayjs(stamp).format("llll");

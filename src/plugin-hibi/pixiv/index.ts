@@ -1,11 +1,10 @@
-import { Context, template } from "koishi";
+import { Context, segment, template } from "koishi";
 import * as _ from "lodash";
 import {
   BoundedNumber,
   datetime,
   EnumerateType,
   ForwardMessageBuilder,
-  src2image,
 } from "../utils";
 import * as constants from "./constants";
 import {
@@ -144,7 +143,7 @@ function member(ctx: Context) {
 
       forward.add(
         template(constants.TEMPLATE_MEMBER, {
-          avatar: src2image(
+          avatar: segment.image(
             mirrorPixivImage(memberData.user.profile_image_urls.medium),
           ),
           member: memberData.user.name,

@@ -1,10 +1,5 @@
 import { Context, segment, template } from "koishi";
-import {
-  datetime,
-  ForwardMessageBuilder,
-  src2image,
-  stamp2time,
-} from "../utils";
+import { datetime, ForwardMessageBuilder, stamp2time } from "../utils";
 import * as constants from "./constants";
 import * as bilibili from "./network";
 import { matchVideoId } from "./utils";
@@ -30,7 +25,7 @@ function video(ctx: Context) {
       const response = await bilibili.video({ aid }),
         forward = new ForwardMessageBuilder(name, +uin!);
 
-      forward.add(src2image(response.pic));
+      forward.add(segment.image(response.pic));
       forward.add(
         template(constants.TEMPLATE_VIDEO, {
           title: response.title,
