@@ -29,7 +29,7 @@ export function parse(body: string) {
   });
 }
 
-export async function search(url: string, type: "color" | "bovw") {
+export async function search(url: string, type: "color" | "bovw" = "color") {
   const form = new FormData(),
     image = await downloadImage(url);
   form.append("file", image);

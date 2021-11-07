@@ -32,7 +32,13 @@ export function parse(body: string) {
     .reverse();
 }
 
-export async function search(url: string, options: { hide?: boolean }) {
+export const DEFAULT_OPTIONS = { hide: true };
+
+export async function search(
+  url: string,
+  options: Partial<typeof DEFAULT_OPTIONS> = {},
+) {
+  options = { ...DEFAULT_OPTIONS, ...options };
   const form = new FormData(),
     image = downloadImage(url);
   form.append("file", image);

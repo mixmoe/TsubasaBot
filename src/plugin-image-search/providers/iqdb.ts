@@ -16,6 +16,7 @@ export enum IqDBServices {
   zerochan = 11,
   anime_pictures = 13,
 }
+
 export function parse(body: string) {
   const $ = cheerio.load(body);
   return _.map($("table"), (result) => {
@@ -38,10 +39,18 @@ export function parse(body: string) {
     .reverse();
 }
 
+export const DEFAULT_OPTIONS = {
+  services: <IqDBServices[]>(
+    Object.values(IqDBServices).filter((s) => typeof s === "number")
+  ),
+  discolor: false,
+};
+
 export async function search(
   url: string,
-  options: { services?: IqDBServices[]; discolor?: boolean },
+  options: Partial<typeof DEFAULT_OPTIONS> = {},
 ) {
+  options = { ...DEFAULT_OPTIONS, ...options };
   const form = new FormData(),
     image = downloadImage(url);
   if (options.services)

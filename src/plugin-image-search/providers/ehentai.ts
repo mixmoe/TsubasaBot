@@ -29,11 +29,18 @@ export function parse(body: string) {
   });
 }
 
+export const DEFAULT_OPTIONS = {
+  cover: false,
+  deleted: false,
+  similar: true,
+};
+
 export async function search(
   url: string,
   source: keyof typeof BASE_URLs = "eh",
-  options: { cover?: boolean; deleted?: boolean; similar?: boolean },
+  options: Partial<typeof DEFAULT_OPTIONS> = {},
 ) {
+  options = { ...DEFAULT_OPTIONS, ...options };
   const form = new FormData(),
     image = await downloadImage(url);
   form.append("sfile", image);
