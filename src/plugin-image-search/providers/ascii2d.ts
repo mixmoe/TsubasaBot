@@ -1,11 +1,11 @@
 import * as cheerio from "cheerio";
+import { template } from "koishi";
 import * as _ from "lodash";
 import { request } from "../network";
-import { readTemplate, removeUndefined } from "../utils";
 
 export const BASE_URL = "https://ascii2d.net/";
 
-export const TEMPLATE = readTemplate(__filename);
+export const TEMPLATE = template.from(__filename, ".mustache");
 
 export function parse(body: string) {
   const $ = cheerio.load(body, { decodeEntities: true });
@@ -30,7 +30,7 @@ export function parse(body: string) {
         ? { link: author.attribs.href, text: $(author).text() }
         : undefined,
     };
-  }).filter(removeUndefined);
+  }).filter(<T>(v: T | undefined): v is T => v !== undefined);
 }
 
 export async function search(url: string, type: "color" | "bovw" = "color") {
