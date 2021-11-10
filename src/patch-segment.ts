@@ -1,4 +1,4 @@
-import { segment } from "koishi";
+import { segment } from "@koishijs/utils";
 
 export function image(
   from: string | Buffer | ArrayBuffer,
