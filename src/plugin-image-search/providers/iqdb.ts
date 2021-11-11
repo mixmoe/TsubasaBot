@@ -1,10 +1,13 @@
 import * as cheerio from "cheerio";
 import * as FormData from "form-data";
+import { template } from "koishi";
 import * as _ from "lodash";
 import { request } from "../network";
 import { downloadImage } from "../utils";
 
 export const BASE_URL = "https://iqdb.org/";
+
+export const TEMPLATE = template.from(__filename, ".mustache");
 
 export enum IqDBServices {
   danbooru = 1,
@@ -27,14 +30,14 @@ export function parse(body: string) {
     const [, similarity] = content.match(/(\d+%)\s*similarity/)!,
       [, resolution, level] = content.match(/(\d+×\d+)\s*\[(\w+)\]/)!;
     return {
-      url: link.attribs.href,
-      image: image.attribs.src,
+      url: new URL(link.attribs.href, BASE_URL).toString(),
+      image: new URL(image.attribs.src, BASE_URL).toString(),
       similarity: parseFloat(similarity),
       resolution,
       level: level.toLowerCase(),
     };
   })
-    .filter(<T>(result: T | undefined): result is T => result !== undefined)
+    .filter(<T>(v: T | undefined): v is T => v !== undefined)
     .sort((a, b) => a.similarity - b.similarity)
     .reverse();
 }
@@ -52,12 +55,12 @@ export async function search(
 ) {
   options = { ...DEFAULT_OPTIONS, ...options };
   const form = new FormData(),
-    image = downloadImage(url);
+    { buffer, info } = await downloadImage(url);
   if (options.services)
     options.services.forEach((s) =>
       form.append("service[]", typeof s === "number" ? s : IqDBServices[s]),
     );
-  form.append("file", image);
+  form.append("file", buffer, info);
   if (options.discolor) form.append("forcegray", "on");
   const { data } = await request.post<string>(BASE_URL, form, {
     headers: form.getHeaders(request.defaults.headers),
