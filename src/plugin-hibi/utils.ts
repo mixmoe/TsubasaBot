@@ -1,3 +1,4 @@
+import { renderText } from "@koishijs/plugin-adapter-onebot";
 import { AsyncLocalStorage } from "async_hooks";
 import * as dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
@@ -88,7 +89,11 @@ export class ForwardMessageBuilder {
   }
 
   public build() {
-    return ForwardMessageBuilder.create(this.name, this.uin, ...this.messages);
+    return ForwardMessageBuilder.create(
+      this.name,
+      this.uin,
+      ...this.messages.map(renderText),
+    );
   }
 
   public async send(session?: Session) {
