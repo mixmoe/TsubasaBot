@@ -23,7 +23,7 @@
     "@koishijs/plugin-manager": "^1.0.0-beta.0",
     "@koishijs/plugin-status": "^5.0.0-beta.0",
     "@koishijs/utils": "^5.0.0-beta.0",
-    "axios": "^0.23.0",
+    "axios": "^0.24.0",
     "axios-logger": "^2.6.0",
     "cheerio": "^1.0.0-rc.10",
     "dayjs": "^1.10.7",
