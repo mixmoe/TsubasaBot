@@ -26,12 +26,19 @@ export function parse(body: string) {
       title: title.text(),
       similarity: parseFloat(similarity.text()),
       misc: _.map(misc, (m) => m.attribs.href),
-      content: _.map(
-        content,
-        (c) =>
-          $(c).text() + (c.tagName === "a" ? `\n${c.attribs.href}\n` : " "),
-      )
-        .filter((s) => s.trim().length > 0)
+      content: _.map(content, (element) => {
+        let result = $(element).text();
+        switch (element.tagName) {
+          case "a":
+            result += `↪️${element.attribs.href}`;
+            break;
+          case "br":
+            result += "\n";
+            break;
+        }
+        return result;
+      })
+        .filter((s) => s.length > 0)
         .join(""),
     };
   })
@@ -40,17 +47,11 @@ export function parse(body: string) {
     .reverse();
 }
 
-export const DEFAULT_OPTIONS = { hide: true };
-
-export async function search(
-  url: string,
-  options: Partial<typeof DEFAULT_OPTIONS> = {},
-) {
-  options = { ...DEFAULT_OPTIONS, ...options };
+export async function search(url: string, hide = true) {
   const form = new FormData(),
     { buffer, info } = await downloadImage(url);
   form.append("file", buffer, info);
-  if (options.hide) form.append("hide", "3");
+  if (hide) form.append("hide", "3");
   const { data } = await request.post<string>("/search.php", form, {
     headers: form.getHeaders(request.defaults.headers),
     baseURL: BASE_URL,
