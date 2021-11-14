@@ -1,20 +1,33 @@
 {
   "editor.formatOnSaveMode": "file",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "debug.javascript.terminalOptions": {
+    "skipFiles": ["<node_internals>/**/*.js"]
   },
   "eslint.enable": true,
   "editor.formatOnSave": true,
   "npm.packageManager": "pnpm",
   "cSpell.words": [
+    "Bilibili",
+    "datetime",
+    "ehentai",
+    "formdata",
+    "gocqhttp",
     "hibi",
     "illusts",
+    "iqdb",
     "koishi",
+    "koishijs",
     "mangas",
+    "netease",
     "onebot",
     "Pixiv",
     "posint",
-    "skia"
+    "saucenao",
+    "skia",
+    "TRACEMOE"
   ]
 }
