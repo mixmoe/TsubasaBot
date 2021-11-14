@@ -4,7 +4,6 @@ import * as common from "@koishijs/plugin-common";
 import * as console from "@koishijs/plugin-console";
 import sqlite from "@koishijs/plugin-database-sqlite";
 import * as gocqhttp from "@koishijs/plugin-gocqhttp";
-import * as manager from "@koishijs/plugin-manager";
 import * as dotenv from "dotenv";
 import { App, Logger } from "koishi";
 import { inspect } from "util";
@@ -35,7 +34,6 @@ app.plugin(onebot, {
 
 app.plugin(sqlite);
 app.plugin(console);
-app.plugin(manager);
 app.plugin(chat);
 app.plugin(common);
 
