@@ -5,6 +5,7 @@ import { Context } from "koishi";
 export const request = axios.create({
   headers: { "User-Agent": "TsubasaBot (koishi-plugin-image-search)" },
   validateStatus: (status) => status < 400,
+  timeout: 12 * 1000,
 });
 
 export function apply(ctx: Context) {
