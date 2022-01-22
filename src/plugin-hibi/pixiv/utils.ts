@@ -31,7 +31,7 @@ export async function imageAntiCensor(
   ctx.fillStyle = "black";
   ctx.font = "6px mono";
   ctx.fillText("Sent by TsubasaBot", 0, image.height);
-  return canvas.toBuffer("image/png");
+  return canvas.toBuffer("png");
 }
 
 export function mirrorPixivImage(source: string): string {

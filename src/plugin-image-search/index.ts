@@ -35,7 +35,7 @@ export const templateMap = {
 
 export function combine(ctx: Context) {
   ctx
-    .command(`${constants.COMMAND_COMBINE}`, { minInterval: 30 * 1000 })
+    .command(`${constants.COMMAND_COMBINE}`)
     .alias("以图搜图", "聚合搜图")
     .shortcut("以图搜番", { options: { engines: ["saucenao", "tracemoe"] } })
     .option("engines", "-e <engines>", {
