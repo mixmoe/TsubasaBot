@@ -1,15 +1,21 @@
-import onebot from "@koishijs/plugin-adapter-onebot";
-import * as chat from "@koishijs/plugin-chat";
-import * as common from "@koishijs/plugin-common";
-import * as console from "@koishijs/plugin-console";
-import sqlite from "@koishijs/plugin-database-sqlite";
-import * as gocqhttp from "@koishijs/plugin-gocqhttp";
+// organize-imports-ignore
 import * as dotenv from "dotenv";
 import { App, Logger } from "koishi";
-import { inspect } from "util";
 import "./src/patch-template";
+import { inspect } from "util";
+
+import onebot from "@koishijs/plugin-adapter-onebot";
+import * as gocqhttp from "koishi-plugin-gocqhttp";
+
+import sqlite from "@koishijs/plugin-database-sqlite";
+
+import console from "@koishijs/plugin-console";
+import * as chat from "@koishijs/plugin-chat";
+import * as status from "@koishijs/plugin-status";
+
 import * as hibi from "./src/plugin-hibi";
 import * as imageSearch from "./src/plugin-image-search";
+import * as thesaurus from "./src/thesaurus";
 
 dotenv.config();
 
@@ -33,11 +39,12 @@ app.plugin(onebot, {
 });
 
 app.plugin(sqlite);
-app.plugin(console);
 app.plugin(chat);
-app.plugin(common);
+app.plugin(status);
+app.plugin(console);
 
 app.plugin(hibi);
 app.plugin(imageSearch);
+app.plugin(thesaurus);
 
 app.start();
